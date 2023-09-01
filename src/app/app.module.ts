@@ -11,6 +11,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ProductCardComponent } from './shop/product-card/product-card.component';
 import { ShopModule } from './shop/shop.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     FontAwesomeModule,
     HttpClientModule,
     CoreModule,
-    ShopModule,
+    HomeModule,
     PaginationModule.forRoot()
   ],
   providers: [],
