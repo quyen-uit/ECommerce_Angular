@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
 import { Type } from 'src/app/shared/models/type';
 import { Brand } from 'src/app/shared/models/brand';
 import { ProductParams } from 'src/app/shared/models/productParams';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  private apiUrl: string = 'http://localhost:5229/api/';
+  private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
