@@ -1,5 +1,5 @@
 <div class="row">
-    <section class="col-3">
+    <section class="col-3" *ngIf="types.length > 0 && brands.length > 0">
         <h5 class="mb-2 text-success">Sort</h5>
         <select class="form-select" aria-label="Default select example" (change)="onSortSelected($event)">
             <option *ngFor="let option of sortOptions" [value]="option.value">

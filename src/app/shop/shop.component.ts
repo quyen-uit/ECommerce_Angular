@@ -17,7 +17,7 @@ export class ShopComponent implements OnInit {
   types: Type[] = [];
   brands: Brand[] = [];
   productParams = new ProductParams();
-  pageCount: number = 1;
+  pageCount: number = 0;
 
   sortOptions = [
     { name: 'Alphabetically', value: 'default' },

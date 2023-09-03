@@ -12,7 +12,8 @@ import { ProductCardComponent } from './shop/product-card/product-card.component
 import { ShopModule } from './shop/shop.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { HomeModule } from './home/home.module';
-import { ErrorInterceptor } from './core/interceptors/error-.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ErrorInterceptor } from './core/interceptors/error-.interceptor';
     PaginationModule.forRoot()
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
