@@ -40,7 +40,7 @@
                                 </td>
                                 <td class="align-middle p-4">
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <fa-icon [icon]="faMinusCircle" (click)="decreaseBasketItem(item.id)" />
+                                        <fa-icon [icon]="faMinusCircle" (click)="removeBasketItem(item.id,1)" />
                                         <span class="mx-2 fs-5">{{item.quantity}}</span>
                                         <fa-icon [icon]="faPlusCircle" (click)="increaseBasketItem(item)" />
                                     </div>
@@ -48,7 +48,8 @@
                                 <td class="text-right font-weight-semibold align-middle p-4">{{item.quantity *
                                     item.price |
                                     currency}}</td>
-                                <td class="text-center align-middle px-0"> <fa-icon [icon]="faTimes" class="fa-times" />
+                                <td class="text-center align-middle px-0"> <fa-icon [icon]="faTimes" class="fa-times"
+                                        (click)="removeBasketItem(item.id,item.quantity)" />
                                 </td>
                             </tr>
                         </tbody>
