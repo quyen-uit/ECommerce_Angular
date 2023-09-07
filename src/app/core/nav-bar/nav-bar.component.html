@@ -1,7 +1,8 @@
 <header>
   <div
     class="d-flex flex-md-row align-items-center justify-content-between p-2 fixed-top bg-white shadow-sm border-bottom">
-    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 40px; margin-right: 80px;" routerLink="/">
+    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 40px; margin-right: 80px;"
+      routerLink="/">
 
     <nav class="d-flex text-uppercase fs-6">
       <a class="me-3 py-2 " routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
@@ -10,7 +11,13 @@
     </nav>
 
     <div class="d-flex align-items-center">
-      <fa-icon [icon]="faShoppingCart"> </fa-icon>
+      <div class="cart position-relative d-inline-flex" routerLink="/basket">
+        <fa-icon [icon]="faShoppingCart" class="shopping-cart"> </fa-icon>
+        <span *ngIf="(basketService.basketSource$ | async) as basketSource"
+          class="cart-basket d-flex align-items-center justify-content-center">
+          {{getCountItems(basketSource.items)}}
+        </span>
+      </div>
       <a href="" class="btn btn-outline-secondary mx-3">Login</a>
       <a href="" class="btn btn-outline-secondary me-3">Sign-up</a>
     </div>
