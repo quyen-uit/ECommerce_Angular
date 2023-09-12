@@ -25,13 +25,15 @@ import { TextInputComponent } from './components/text-input/text-input.component
     BsDropdownModule.forRoot()
   ],
   exports: [
-    PaginationModule,
     PagingHeaderComponent,
     PagerComponent,
     OrderTotalsComponent,
+    TextInputComponent,
+    PaginationModule,
     CarouselModule,
     ReactiveFormsModule,
-    BsDropdownModule
+    BsDropdownModule,
+    
   ]
 })
 export class SharedModule { }
