@@ -21,7 +21,6 @@ export class AccountService {
       map(user => {
         this.currentUserSource.next(user);
         localStorage.setItem('user_token', user.token);
-        return user;
       })
     )
   }
@@ -31,7 +30,6 @@ export class AccountService {
       map(user => {
         this.currentUserSource.next(user);
         localStorage.setItem('user_token', user.token);
-        return user;
       })
     )
   }
@@ -43,7 +41,7 @@ export class AccountService {
   }
 
   checkEmailExist(email: string) {
-    this.http.get<boolean>(this.baseUrl + 'account/email-exist?email=' + email);
+    return this.http.get<boolean>(this.baseUrl + 'account/email-exist?email=' + email);
   }
 
   loadCurrentUser(token: string) {

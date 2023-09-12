@@ -1,5 +1,6 @@
 import { Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-text-input',
@@ -9,8 +10,9 @@ import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 export class TextInputComponent implements ControlValueAccessor {
   @Input() type = 'text';
   @Input() label = '';
+  faSpinner = faSpinner;
 
-  constructor(@Self() public controlDir: NgControl) { 
+  constructor(@Self() public controlDir: NgControl) {
     this.controlDir.valueAccessor = this;
   }
 

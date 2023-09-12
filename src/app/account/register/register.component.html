@@ -1,1 +1,25 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center">
+    <main class="form-signup">
+        <form class="d-flex flex-column justify-content-center align-items-center" [formGroup]="registerForm"
+            (ngSubmit)="onSubmit()">
+            <img class="mb-4 align-self-center" src="assets/images/logo.png" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+            <app-text-input [formControl]="registerForm.controls['displayName']" [label]="'Display Name'"
+                class="mb-2 w-100"></app-text-input>
+            <app-text-input [formControl]="registerForm.controls['email']" [label]="'Email'"
+                class="mb-2 w-100"></app-text-input>
+            <app-text-input [formControl]="registerForm.controls['password']" [type]="'password'" [label]="'Password'"
+                class="mb-2 w-100"></app-text-input>
+            <ul class="text-danger list-unstyled" *ngIf="errors">
+                <li *ngFor="let error of errors">{{error}}</li>
+            </ul>
+            <div class="checkbox mb-3 mt-2">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button [disabled]="registerForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign
+                up</button>
+        </form>
+    </main>
+</div>

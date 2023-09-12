@@ -24,7 +24,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FontAwesomeModule,
     HttpClientModule,
     CoreModule,
     HomeModule,

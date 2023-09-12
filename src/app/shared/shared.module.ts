@@ -8,6 +8,7 @@ import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TextInputComponent } from './components/text-input/text-input.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { TextInputComponent } from './components/text-input/text-input.component
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     ReactiveFormsModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    FontAwesomeModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -33,7 +35,7 @@ import { TextInputComponent } from './components/text-input/text-input.component
     CarouselModule,
     ReactiveFormsModule,
     BsDropdownModule,
-    
+    FontAwesomeModule
   ]
 })
 export class SharedModule { }
