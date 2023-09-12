@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AccountService } from '../account.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +13,14 @@ export class LoginComponent {
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', Validators.required),
   })
-
-  constructor(private accountService: AccountService, private router: Router) { }
+  returnUrl = '';
+  constructor(private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.returnUrl = activatedRoute.snapshot.queryParams['returnUrl'] || '/shop';
+  }
 
   onSubmit() {
     this.accountService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigateByUrl('shop'),
+      next: () => this.router.navigateByUrl(this.returnUrl),
       error: error => console.log(error)
     })
   }
