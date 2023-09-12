@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faFileInvoice, faShoppingCart, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { AccountService } from 'src/app/account/account.service';
 import { BasketService } from 'src/app/basket/basket.service';
 import { BasketItem } from 'src/app/shared/models/basket';
 
@@ -10,8 +11,11 @@ import { BasketItem } from 'src/app/shared/models/basket';
 })
 export class NavBarComponent {
   faShoppingCart = faShoppingCart;
-
-  constructor(public basketService: BasketService) { }
+  faFileInvoice = faFileInvoice;
+  faSignOutAlt = faSignOutAlt;
+  faUser = faUser;
+  
+  constructor(public basketService: BasketService, public accountService: AccountService) { }
 
   getCountItems(basketItems: BasketItem[]) : number {
     return basketItems.reduce((sum, current) => sum + current.quantity, 0)

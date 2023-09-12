@@ -18,8 +18,42 @@
           {{getCountItems(basketSource.items)}}
         </span>
       </div>
-      <a href="" class="btn btn-outline-secondary mx-3">Login</a>
-      <a href="" class="btn btn-outline-secondary me-3">Sign-up</a>
+      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+        <a href="" routerLink="account/login" class="btn btn-outline-secondary mx-3">Log in</a>
+        <a href="" routerLink="account/register" class="btn btn-outline-secondary me-3">Sign-up</a>
+      </ng-container>
+      <ng-container *ngIf="(accountService.currentUser$ | async) as currentUser">
+        <div class="btn-group me-3" dropdown>
+          <a dropdownToggle class="dropdown-toggle ms-3 " style="cursor: pointer;">
+            {{currentUser.displayName}} <span class="caret"></span>
+          </a>
+
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+            aria-labelledby="button-basic">
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="profile">
+                <fa-icon [icon]="faUser" class="me-2"></fa-icon> Profile
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="basket">
+                <fa-icon [icon]="faShoppingCart" class="me-2"></fa-icon>Basket
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="order">
+                <fa-icon [icon]="faFileInvoice" class="me-3"></fa-icon>Orders
+              </a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" (click)="accountService.logout()">
+                <fa-icon [icon]="faSignOutAlt" class="me-2"></fa-icon>Log out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
     </div>
   </div>
 

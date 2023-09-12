@@ -1,0 +1,33 @@
+<div class="container d-flex justify-content-center">
+    <main class="form-signin">
+        <form class="d-flex flex-column justify-content-center align-items-center" [formGroup]="loginForm"
+            (ngSubmit)="onSubmit()">
+            <img class="mb-4 align-self-center" src="assets/images/logo.png" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Log in</h1>
+
+            <div class="form-floating mb-2 w-100">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                    [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                    formControlName="email">
+                <label for="floatingInput">Email address</label>
+                <div *ngIf="loginForm.get('email')?.errors?.['required']" class="invalid-feedback">Please enter a email.
+                </div>
+                <div *ngIf="loginForm.get('email')?.errors?.['email']" class="invalid-feedback">Please enter a valid
+                    email.
+                </div>
+            </div>
+            <div class="form-floating w-100">
+                <input type="password" class="form-control is-invalid" id="floatingPassword" placeholder="Password"
+                    formControlName="password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3 mt-2">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+        </form>
+    </main>
+</div>
