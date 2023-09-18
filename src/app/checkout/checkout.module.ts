@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SharedModule } from '../shared/shared.module';
+import { CheckoutRoutingModule } from './checkout-routing.module';
 
 
 
@@ -9,7 +11,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
     CheckoutComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    CheckoutRoutingModule
   ]
 })
 export class CheckoutModule { }

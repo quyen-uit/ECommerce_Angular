@@ -1,8 +1,8 @@
-<div class="container bg-light mt-3 p-3" *ngIf="(basketService.basketTotalSource$ | async) as basketTotal">
-    <div class="">
-        <h3>Order Summary</h3>
+<div class="fluid-container bg-light" *ngIf="(basketService.basketTotalSource$ | async) as basketTotal">
+    <div class="bg-success ps-3">
+        <h3 class="text-white">Order Summary</h3>
     </div>
-    <ul class="list-group fw-bold">
+    <ul class="list-group fw-bold mx-3 pb-2">
         <li class="list-group-item d-flex justify-content-between">
             <span>Subtotal</span>
             <span>{{basketTotal.subTotal | currency}}</span>
