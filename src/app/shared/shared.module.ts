@@ -9,14 +9,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { StepperComponent } from './components/stepper/stepper.component';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
 
 @NgModule({
   declarations: [
     PagingHeaderComponent,
     PagerComponent,
     OrderTotalsComponent,
-    TextInputComponent
+    TextInputComponent,
+    StepperComponent,
+    BasketSummaryComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CarouselModule.forRoot(),
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    CdkStepperModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -35,7 +40,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CarouselModule,
     ReactiveFormsModule,
     BsDropdownModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CdkStepperModule,
+    StepperComponent
   ]
 })
 export class SharedModule { }

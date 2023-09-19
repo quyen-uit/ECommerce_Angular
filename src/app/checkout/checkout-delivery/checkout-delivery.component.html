@@ -1,0 +1,13 @@
+<div *ngIf="checkoutForm" [formGroup]="checkoutForm" class="my-3">
+    <div class="row" formGroupName="deliveryForm">
+        <div class="form-group col-6 mt-3" *ngFor="let method of deliveryMethods">
+            <input type="radio" class="form-check-input" value="{{method.id}}" id="{{method.id}}"
+                formControlName="deliveryMethod">
+            <label for="{{method.id}}" class="form-check-label mx-2">
+                <strong>{{method.shortName}} - {{method.price | currency}}</strong>
+                <br>
+                <span class="label-description">{{method.description}}</span>
+            </label> 
+        </div>
+    </div>
+</div>

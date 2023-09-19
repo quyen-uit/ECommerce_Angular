@@ -1,0 +1,34 @@
+<div *ngIf="checkoutForm" [formGroup]="checkoutForm" class="my-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>Shipping Address</h4>
+        <button class="btn btn-outline-success">
+            Save as default address
+        </button>
+    </div>
+    <div class="row" formGroupName="addressForm">
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'First name'" formControlName="firstName"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'Last name'" formControlName="lastName"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'House number'" formControlName="houseNumber"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'Street'" formControlName="street"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'Ward'" formControlName="ward"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'District'" formControlName="district"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'City'" formControlName="city"></app-text-input>
+        </div>
+        <div class="form-group col-6 mt-3">
+            <app-text-input [label]="'Zip code'" formControlName="zipCode"></app-text-input>
+        </div>
+    </div>
+</div>
