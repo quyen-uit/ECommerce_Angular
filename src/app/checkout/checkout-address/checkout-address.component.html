@@ -1,7 +1,8 @@
 <div *ngIf="checkoutForm" [formGroup]="checkoutForm" class="my-3">
     <div class="d-flex justify-content-between align-items-center">
         <h4>Shipping Address</h4>
-        <button class="btn btn-outline-success">
+        <button class="btn btn-outline-success" (click)="saveAddress()"
+            [disabled]="!checkoutForm.get('addressForm')?.valid && !checkoutForm.get('addressForm')?.dirty">
             Save as default address
         </button>
     </div>
@@ -28,7 +29,7 @@
             <app-text-input [label]="'City'" formControlName="city"></app-text-input>
         </div>
         <div class="form-group col-6 mt-3">
-            <app-text-input [label]="'Zip code'" formControlName="zipCode"></app-text-input>
+            <app-text-input [label]="'Zip code'" formControlName="zipCode" [type]="'number'"></app-text-input>
         </div>
     </div>
 </div>
