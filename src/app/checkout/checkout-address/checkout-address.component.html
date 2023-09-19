@@ -32,3 +32,13 @@
         </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-between flex-row">
+    <button class="btn btn-outline-danger" routerLink="/basket">
+        <fa-icon [icon]="faIcon.faArrowLeft"></fa-icon>
+        Back to basket
+    </button>
+    <button class="btn btn-danger" cdkStepperNext>
+        Go to delivery <fa-icon [icon]="faIcon.faArrowRight"></fa-icon>
+    </button>
+</div>

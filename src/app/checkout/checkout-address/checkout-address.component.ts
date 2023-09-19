@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { faIcon } from 'src/app/shared/icons/faIcon';
 
 @Component({
   selector: 'app-checkout-address',
@@ -8,4 +9,5 @@ import { FormGroup } from '@angular/forms';
 })
 export class CheckoutAddressComponent {
   @Input() checkoutForm?: FormGroup;
-}
+  faIcon = faIcon;
+ }

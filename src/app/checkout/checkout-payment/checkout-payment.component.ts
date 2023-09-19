@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faIcon } from 'src/app/shared/icons/faIcon';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./checkout-payment.component.scss']
 })
 export class CheckoutPaymentComponent {
+  faIcon = faIcon;
 
 }
