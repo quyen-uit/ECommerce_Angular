@@ -1,0 +1,45 @@
+<div class="table-responsive" *ngIf="(basketService.basketSource$ | async) as basket">
+    <table class="table table-bordered m-0">
+        <thead>
+            <tr>
+                <!-- Set columns width -->
+                <th class="text-center py-3 px-4" [class.th__title]="isBasket">Name</th>
+                <th class="text-center py-3 px-4" [class.th__title]="isBasket">Price</th>
+                <th class="text-center py-3 px-4" [class.th__title]="isBasket">Quantity</th>
+                <th class="text-center py-3 px-4" [class.th__title]="isBasket">Total</th>
+                <th class="text-center py-3 px-4" [class.th__title]="isBasket" *ngIf="isBasket">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of basket.items">
+                <td class="p-4">
+                    <div class="media align-items-center d-flex">
+                        <img src="{{item.pictureUrl}}" class="d-block ui-w-40 ui-bordered me-4" alt="">
+                        <div class="media-body">
+                            <a href="#" routerLink="/shop/{{item.id}}"
+                                class="d-block text-dark">{{item.productName}}</a>
+                            <small>
+                                <span class="text-muted">Brand: </span>{{item.brand}}
+                            </small>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center font-weight-semibold align-middle p-4">{{item.price | currency}}
+                </td>
+                <td class="text-center align-middle p-4">
+                    <div>
+                        <fa-icon [icon]="faMinusCircle" (click)="onRemoveItem(item.id,1)" *ngIf="isBasket" />
+                        <span class="mx-2 fs-5">{{item.quantity}}</span>
+                        <fa-icon [icon]="faPlusCircle" (click)="onAddItem(item)" *ngIf="isBasket" />
+                    </div>
+                </td>
+                <td class="text-center font-weight-semibold align-middle p-4">{{item.quantity *
+                    item.price |
+                    currency}}</td>
+                <td class="text-center align-middle px-0"> <fa-icon [icon]="faTimes" class="fa-times"
+                        (click)="onRemoveItem(item.id,item.quantity)" *ngIf="isBasket" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

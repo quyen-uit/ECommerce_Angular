@@ -10,51 +10,8 @@
                 <h3>There is not item in your basket.</h3>
             </ng-container>
             <ng-container *ngIf="basket.items.length > 0">
-                <div class="table-responsive">
-                    <table class="table table-bordered m-0">
-                        <thead>
-                            <tr>
-                                <!-- Set columns width -->
-                                <th class="text-center py-3 px-4" style="min-width: 400px;">Name</th>
-                                <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
-                                <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
-                                <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
-                                <th class="text-right py-3 px-4" style="width: 100px;">Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of basket.items">
-                                <td class="p-4">
-                                    <div class="media align-items-center d-flex">
-                                        <img src="{{item.pictureUrl}}" class="d-block ui-w-40 ui-bordered me-4" alt="">
-                                        <div class="media-body">
-                                            <a href="#" routerLink="/shop/{{item.id}}"
-                                                class="d-block text-dark">{{item.productName}}</a>
-                                            <small>
-                                                <span class="text-muted">Brand: </span>{{item.brand}}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">{{item.price | currency}}
-                                </td>
-                                <td class="align-middle p-4">
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <fa-icon [icon]="faMinusCircle" (click)="removeBasketItem(item.id,1)" />
-                                        <span class="mx-2 fs-5">{{item.quantity}}</span>
-                                        <fa-icon [icon]="faPlusCircle" (click)="increaseBasketItem(item)" />
-                                    </div>
-                                </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">{{item.quantity *
-                                    item.price |
-                                    currency}}</td>
-                                <td class="text-center align-middle px-0"> <fa-icon [icon]="faTimes" class="fa-times"
-                                        (click)="removeBasketItem(item.id,item.quantity)" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <app-basket-summary (addItem)="increaseBasketItem($event)"
+                    (removeItem)="removeBasketItem($event)"></app-basket-summary>
                 <div class="row">
                     <div class="col-6 offset-6 mt-3">
                         <app-order-totals></app-order-totals>

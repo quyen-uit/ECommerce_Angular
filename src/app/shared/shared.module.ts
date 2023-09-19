@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StepperComponent } from './components/stepper/stepper.component';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BasketSummaryComponent } from './basket-summary/basket-summary.componen
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     FontAwesomeModule,
-    CdkStepperModule
+    CdkStepperModule,
+    RouterModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -42,7 +44,8 @@ import { BasketSummaryComponent } from './basket-summary/basket-summary.componen
     BsDropdownModule,
     FontAwesomeModule,
     CdkStepperModule,
-    StepperComponent
+    StepperComponent,
+    BasketSummaryComponent
   ]
 })
 export class SharedModule { }
