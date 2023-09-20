@@ -1,0 +1,26 @@
+<div class="container px-3 my-5 clearfix">
+    <!-- Shopping cart table -->
+    <ng-container *ngIf="(basketService.basketSource$ | async) === null">
+        <h3>There is not item in your basket.</h3>
+    </ng-container>
+
+    <div class="card" *ngIf="(basketService.basketSource$ | async) as basket">
+        <div class="card-body">
+            <ng-container *ngIf="basket.items.length <= 0">
+                <h3>There is not item in your basket.</h3>
+            </ng-container>
+            <ng-container *ngIf="basket.items.length > 0">
+                <app-basket-summary (addItem)="increaseBasketItem($event)"
+                    (removeItem)="removeBasketItem($event)"></app-basket-summary>
+                <div class="row">
+                    <div class="col-6 offset-6 mt-3">
+                        <app-order-totals></app-order-totals>
+                        <div class="mx-3">
+                            <button routerLink="/checkout" class="btn btn-warning w-100">Check Out</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

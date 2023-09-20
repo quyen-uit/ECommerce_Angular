@@ -1,0 +1,20 @@
+<div class="container d-flex justify-content-center">
+    <main class="form-signin">
+        <form class="d-flex flex-column justify-content-center align-items-center" [formGroup]="loginForm"
+            (ngSubmit)="onSubmit()">
+            <img class="mb-4 align-self-center" src="assets/images/logo.png" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Log in</h1>
+
+            <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email'"
+                class="mb-2 w-100"></app-text-input>
+            <app-text-input [formControl]="loginForm.controls['password']" [type]="'password'" [label]="'Password'"
+                class="mb-2 w-100"></app-text-input>
+            <div class="checkbox mb-3 mt-2">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+        </form>
+    </main>
+</div>

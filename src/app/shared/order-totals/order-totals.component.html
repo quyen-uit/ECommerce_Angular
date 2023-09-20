@@ -1,0 +1,19 @@
+<div class="fluid-container bg-light" *ngIf="(basketService.basketTotalSource$ | async) as basketTotal">
+    <div class="bg-success ps-3">
+        <h5 class="text-white py-2">Order Summary</h5>
+    </div>
+    <ul class="list-group fw-bold mx-3 pb-2">
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Subtotal</span>
+            <span>{{basketTotal.subTotal | currency}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Shipping Cost</span>
+            <span>{{basketTotal.shippingPrice | currency}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Total</span>
+            <span>{{basketTotal.total | currency}}</span>
+        </li>
+    </ul>
+</div>

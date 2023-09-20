@@ -1,43 +1,46 @@
-<div class="row">
-    <section class="col-3">
-        <h5 class="mb-2 text-success">Sort</h5>
-        <select class="form-select" aria-label="Default select example" (change)="onSortSelected($event)">
-            <option *ngFor="let option of sortOptions" [value]="option.value">
-                {{option.name}}</option>
-        </select>
-        <h5 class="my-2 text-success">Brands</h5>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let brand of brands" [value]="brand.id"
-                [class.active]="productParams.brandId===brand.id" (click)="onBrandSelected(brand.id)"> {{brand.name}}
-            </li>
-        </ul>
-        <h5 class="my-2 text-success">Types</h5>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let type of types" [value]="type.id"
-                [class.active]="productParams.typeId===type.id" (click)="onTypeSelected(type.id)">{{type.name}}</li>
-        </ul>
-    </section>
-    <section *ngIf="pageCount > 0" class="col-9">
-        <div class="d-flex justify-content-between align-items-center pb-2">
-            <app-paging-header [pageCount]="pageCount" [pageSize]="productParams.pageSize"
-                [pageIndex]="productParams.pageIndex"></app-paging-header>
-            <div class="d-flex justify-content-between align-items-center">
-                <input type="text" placeholder="Search" class="form-control" #search>
-                <button (click)="onSearch()" class="btn btn-outline-secondary mx-2">Search</button>
-                <button (click)="onReset()" class="btn btn-outline-secondary ">Reset</button>
+<div class="container">
+    <div class="row mt-3">
+        <section class="col-3" *ngIf="types.length > 0 && brands.length > 0">
+            <h5 class="mb-2 text-success">Sort</h5>
+            <select class="form-select" aria-label="Default select example" (change)="onSortSelected($event)">
+                <option *ngFor="let option of sortOptions" [value]="option.value">
+                    {{option.name}}</option>
+            </select>
+            <h5 class="my-2 text-success">Brands</h5>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let brand of brands" [value]="brand.id"
+                    [class.active]="productParams.brandId===brand.id" (click)="onBrandSelected(brand.id)">
+                    {{brand.name}}
+                </li>
+            </ul>
+            <h5 class="my-2 text-success">Types</h5>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let type of types" [value]="type.id"
+                    [class.active]="productParams.typeId===type.id" (click)="onTypeSelected(type.id)">{{type.name}}</li>
+            </ul>
+        </section>
+        <section *ngIf="pageCount > 0" class="col-9">
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <app-paging-header [pageCount]="pageCount" [pageSize]="productParams.pageSize"
+                    [pageIndex]="productParams.pageIndex"></app-paging-header>
+                <div class="d-flex justify-content-between align-items-center">
+                    <input type="text" placeholder="Search" class="form-control" #search>
+                    <button (click)="onSearch()" class="btn btn-outline-secondary mx-2">Search</button>
+                    <button (click)="onReset()" class="btn btn-outline-secondary ">Reset</button>
+                </div>
             </div>
-        </div>
-        <div class="row row-cols-3 row-gap-3">
-            <div class="col" *ngFor="let item of products">
-                <app-product-card [product]="item"></app-product-card>
+            <div class="row row-cols-3 row-gap-3">
+                <div class="col" *ngFor="let item of products">
+                    <app-product-card [product]="item"></app-product-card>
+                </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center mt-2">
-            <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize"
-                (pagerChanged)="onPageChanged($event)"> </app-pager>
-        </div>
-    </section>
-    <section *ngIf="pageCount == 0" class="col-9">
-        <span>There is no result.</span>
-    </section>
+            <div class="d-flex justify-content-center mt-2">
+                <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize"
+                    (pagerChanged)="onPageChanged($event)"> </app-pager>
+            </div>
+        </section>
+        <section *ngIf="pageCount == 0" class="col-9">
+            <span>There is no result.</span>
+        </section>
+    </div>
 </div>

@@ -1,18 +1,59 @@
 <header>
   <div
     class="d-flex flex-md-row align-items-center justify-content-between p-2 fixed-top bg-white shadow-sm border-bottom">
-    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 40px; margin-right: 80px;" routerLink="/">
+    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 40px; margin-right: 80px;"
+      routerLink="/">
 
     <nav class="d-flex text-uppercase fs-6">
       <a class="me-3 py-2 " routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
       <a class="me-3 py-2 " routerLink="/shop" routerLinkActive="active">Shop</a>
-      <a class="me-3 py-2 " routerLink="/contact" routerLinkActive="active">Contact</a>
+      <a class="me-3 py-2 " routerLink="/test-error" routerLinkActive="active">Error</a>
     </nav>
 
     <div class="d-flex align-items-center">
-      <fa-icon [icon]="faShoppingCart"> </fa-icon>
-      <a href="" class="btn btn-outline-secondary mx-3">Login</a>
-      <a href="" class="btn btn-outline-secondary me-3">Sign-up</a>
+      <div class="cart position-relative d-inline-flex" routerLink="/basket">
+        <fa-icon [icon]="faShoppingCart" class="shopping-cart"> </fa-icon>
+        <span *ngIf="(basketService.basketSource$ | async) as basketSource"
+          class="cart-basket d-flex align-items-center justify-content-center">
+          {{getCountItems(basketSource.items)}}
+        </span>
+      </div>
+      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+        <a href="" routerLink="account/login" class="btn btn-outline-secondary mx-3">Log in</a>
+        <a href="" routerLink="account/register" class="btn btn-outline-secondary me-3">Sign-up</a>
+      </ng-container>
+      <ng-container *ngIf="(accountService.currentUser$ | async) as currentUser">
+        <div class="btn-group me-3" dropdown>
+          <a dropdownToggle class="dropdown-toggle ms-3 " style="cursor: pointer;">
+            {{currentUser.displayName}} <span class="caret"></span>
+          </a>
+
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+            aria-labelledby="button-basic">
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="profile">
+                <fa-icon [icon]="faUser" class="me-2"></fa-icon> Profile
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="basket">
+                <fa-icon [icon]="faShoppingCart" class="me-2"></fa-icon>Basket
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" routerLink="order">
+                <fa-icon [icon]="faFileInvoice" class="me-3"></fa-icon>Orders
+              </a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" href="#" (click)="accountService.logout()">
+                <fa-icon [icon]="faSignOutAlt" class="me-2"></fa-icon>Log out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
     </div>
   </div>
 
