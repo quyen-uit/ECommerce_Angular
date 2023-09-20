@@ -4,7 +4,7 @@
         <fa-icon [icon]="faIcon.faArrowLeft"></fa-icon>
         Back to review
     </button>
-    <button class="btn btn-danger" cdkStepperNext>
+    <button class="btn btn-danger" cdkStepperNext (click)="submitOrder()">
         Go to order <fa-icon [icon]="faIcon.faArrowRight"></fa-icon>
     </button>
 </div>

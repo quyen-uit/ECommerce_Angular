@@ -23,6 +23,6 @@ export class Basket implements Basket {
 
 export interface BasketTotal {
     subTotal: number,
-    shippingCost: number,
+    shippingPrice: number,
     total: number;
 }

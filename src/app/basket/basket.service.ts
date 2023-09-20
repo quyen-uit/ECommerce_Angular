@@ -12,10 +12,10 @@ export class BasketService {
   baseUrl = environment.apiUrl;
   private basketSource = new BehaviorSubject<Basket | null>(null);
   private basketTotalSource = new BehaviorSubject<BasketTotal | null>(null);
- 
+
   basketSource$ = this.basketSource.asObservable();
   basketTotalSource$ = this.basketTotalSource.asObservable();
-  shipping = 0;
+  shippingPrice = 0;
   constructor(private http: HttpClient) { }
 
   getBasket(id: string) {
@@ -36,19 +36,23 @@ export class BasketService {
     })
   }
 
-  setShippingPrice(price: number){
-    this.shipping = price;
+  setShippingPrice(price: number) {
+    this.shippingPrice = price;
     this.calculateBasketTotal();
   }
 
   deleteBasket(basket: Basket) {
     this.http.delete<Basket>(this.baseUrl + 'basket?id=basket' + basket.id).subscribe({
       next: () => {
-        this.basketSource.next(null);
-        this.basketTotalSource.next(null);
-        localStorage.removeItem('basket_id');
+        this.deleteLocalBasket();
       }
     })
+  }
+
+  deleteLocalBasket() {
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
   }
 
   getCurrentBasketValue() {
@@ -114,10 +118,10 @@ export class BasketService {
   private calculateBasketTotal() {
     const basket = this.getCurrentBasketValue();
     if (basket) {
-      const shippingCost = this.shipping;
+      const shippingPrice = this.shippingPrice;
       const subTotal = basket.items.reduce((sum, current) => sum + current.quantity * current.price, 0);
-      const total = shippingCost + subTotal;
-      this.basketTotalSource.next({ subTotal, shippingCost, total });
+      const total = shippingPrice + subTotal;
+      this.basketTotalSource.next({ subTotal, shippingPrice, total });
     }
   }
 
