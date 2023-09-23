@@ -15,10 +15,10 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
-  ],
-  exports:[
+    RouterModule,
     OrderRoutingModule
+  ],
+  exports: [
   ]
 })
 export class OrderModule { }
