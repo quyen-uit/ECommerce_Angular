@@ -12,7 +12,7 @@ export interface Order {
     shipToAddress: Address;
     deliveryMethod: string;
     shippingPrice: number;
-    subtotal: number;
+    subTotal: number;
     total: number;
     status: string;
     paymentIntentId: string;

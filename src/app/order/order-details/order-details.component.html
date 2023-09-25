@@ -1,0 +1,64 @@
+<div *ngIf="order != null" class="container mt-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <!-- Set columns width -->
+                            <th class="text-center py-3 px-4 th__title">Name</th>
+                            <th class="text-center py-3 px-4 th__title">Price</th>
+                            <th class="text-center py-3 px-4 th__title">Quantity</th>
+                            <th class="text-center py-3 px-4 th__title">Total</th>
+                            <th class="text-center py-3 px-4 th__title">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order.orderItems">
+                            <td class="p-4">
+                                <div class="media align-items-center d-flex">
+                                    <img src="{{item.photoUrl}}" class="d-block ui-w-40 ui-bordered me-4" alt="">
+                                    <div class="media-body">
+                                        <a href="#" routerLink="/shop/{{item.productId}}"
+                                            class="d-block text-dark">{{item.productName}}</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center font-weight-semibold align-middle p-4">{{item.price | currency}}
+                            </td>
+                            <td class="text-center align-middle p-4">
+                                <div>
+                                    <span class="mx-2 fs-5">{{item.quantity}}</span>
+                                </div>
+                            </td>
+                            <td class="text-center font-weight-semibold align-middle p-4">{{item.quantity *
+                                item.price |
+                                currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="fluid-container bg-light">
+                <div class="bg-success ps-3">
+                    <h5 class="text-white py-2">Order Summary</h5>
+                </div>
+                <ul class="list-group fw-bold mx-3 pb-2">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>{{order.subTotal | currency}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Shipping Cost</span>
+                        <span>{{order.shippingPrice | currency}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total</span>
+                        <span>{{order.total | currency}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

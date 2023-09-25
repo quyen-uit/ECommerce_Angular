@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
   { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) },
   { path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule) },
+  { path: 'order', canActivate: [AuthGuard], loadChildren: () => import('./order/order.module').then(m => m.OrderModule),data: { breadcrumb: 'Order' }  },
   { path: 'checkout', canActivate: [AuthGuard], loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
