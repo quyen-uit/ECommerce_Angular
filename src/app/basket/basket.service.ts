@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Basket, BasketItem, BasketTotal } from '../shared/models/basket';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../shared/models/product';
+import { DeliveryMethod } from '../shared/models/deliveryMethod';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class BasketService {
 
   basketSource$ = this.basketSource.asObservable();
   basketTotalSource$ = this.basketTotalSource.asObservable();
-  shippingPrice = 0;
   constructor(private http: HttpClient) { }
 
   getBasket(id: string) {
@@ -36,8 +36,14 @@ export class BasketService {
     })
   }
 
-  setShippingPrice(price: number) {
-    this.shippingPrice = price;
+  setShippingPrice(deliveryMethod: DeliveryMethod) {
+    const basket = this.getCurrentBasketValue();
+
+    if (basket) {
+      basket.shippingPrice = deliveryMethod.price;
+      basket.deliveryMethodId = deliveryMethod.id;
+      this.setBasket(basket);
+    }
     this.calculateBasketTotal();
   }
 
@@ -118,14 +124,23 @@ export class BasketService {
   private calculateBasketTotal() {
     const basket = this.getCurrentBasketValue();
     if (basket) {
-      const shippingPrice = this.shippingPrice;
       const subTotal = basket.items.reduce((sum, current) => sum + current.quantity * current.price, 0);
-      const total = shippingPrice + subTotal;
-      this.basketTotalSource.next({ subTotal, shippingPrice, total });
+      const total = basket.shippingPrice + subTotal;
+      this.basketTotalSource.next({ subTotal, shippingPrice: basket.shippingPrice, total });
     }
   }
 
   private isProduct(item: Product | BasketItem): item is Product {
     return (item as Product).productBrand !== undefined;
+  }
+
+  createPaymentIntent() {
+    const basket = this.getCurrentBasketValue();
+    return this.http.post<Basket>(this.baseUrl + 'payment/' + basket?.id, {})
+      .pipe(
+        map(basket => {
+          this.basketSource.next(basket);
+        })
+      )
   }
 }
