@@ -33,6 +33,8 @@
         Back to review
     </button>
     <button class="btn btn-danger" cdkStepperNext (click)="submitOrder()">
-        Go to order <fa-icon [icon]="faIcon.faArrowRight"></fa-icon>
+        Go to order 
+        <fa-icon *ngIf="!loading" [icon]="faIcon.faArrowRight"></fa-icon>
+        <fa-icon *ngIf="loading" [icon]="faSpinner" class="fa-spin loader"></fa-icon>
     </button>
 </div>
