@@ -32,7 +32,7 @@
         <fa-icon [icon]="faIcon.faArrowLeft"></fa-icon>
         Back to review
     </button>
-    <button class="btn btn-danger" cdkStepperNext (click)="submitOrder()">
+    <button class="btn btn-danger" [disabled]="loading || !paymentFormComplete" cdkStepperNext (click)="submitOrder()">
         Go to order 
         <fa-icon *ngIf="!loading" [icon]="faIcon.faArrowRight"></fa-icon>
         <fa-icon *ngIf="loading" [icon]="faSpinner" class="fa-spin loader"></fa-icon>

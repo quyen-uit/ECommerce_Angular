@@ -17,7 +17,7 @@
         <fa-icon [icon]="faIcon.faArrowLeft"></fa-icon>
         Back to address
     </button>
-    <button class="btn btn-danger" cdkStepperNext>
+    <button class="btn btn-danger" [disabled]="checkoutForm?.get('deliveryForm')?.invalid" cdkStepperNext>
         Go to review <fa-icon [icon]="faIcon.faArrowRight"></fa-icon>
     </button>
 </div>
