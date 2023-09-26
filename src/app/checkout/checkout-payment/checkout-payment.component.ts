@@ -78,25 +78,26 @@ export class CheckoutPaymentComponent implements OnInit {
   async submitOrder() {
     this.loading = true;
     const basket = this.basketService.getCurrentBasketValue();
-    try {
-      const createdOrder = await this.createOrder(basket);
-      const paymentResult = await this.confirmStripePayment(basket);
+    if (basket) {
+      try {
+        const createdOrder = await this.createOrder(basket);
+        const paymentResult = await this.confirmStripePayment(basket);
 
-      if (paymentResult.paymentIntent) {
-        this.basketService.deleteLocalBasket();
-        const navExtras: NavigationExtras = { state: createdOrder };
-        this.router.navigate(['checkout/success'], navExtras);
+        if (paymentResult.paymentIntent) {
+          this.basketService.deleteBasket(basket);
+          const navExtras: NavigationExtras = { state: createdOrder };
+          this.router.navigate(['checkout/success'], navExtras);
+        }
+        else this.toast.error(paymentResult.error.message);
+
+      } catch (error: any) {
+        console.log(error);
+        this.toast.error(error.message);
       }
-      else this.toast.error(paymentResult.error.message);
-
-    } catch (error: any) {
-      console.log(error);
-      this.toast.error(error.message);
-    }
-    finally
-    {
-      this.loading = false;
-    }
+      finally {
+        this.loading = false;
+      }
+    } else throw new Error("Basket is null!!");
 
   }
 
@@ -140,9 +141,9 @@ export class CheckoutPaymentComponent implements OnInit {
 
   }
 
-  get paymentFormComplete(){
+  get paymentFormComplete() {
     return this.checkoutForm?.get('paymentForm')?.valid
-            && this.cardCvcComplete && this.cardExpiryComplete && this.cardNumberComplete;
+      && this.cardCvcComplete && this.cardExpiryComplete && this.cardNumberComplete;
   }
-  
+
 }
