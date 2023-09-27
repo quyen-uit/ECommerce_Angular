@@ -18,23 +18,31 @@ export class CheckoutDeliveryComponent implements OnInit {
   constructor(private checkoutService: CheckoutService, private basketService: BasketService) { }
 
   ngOnInit(): void {
+    this.initDeliveryMethods();
+    this.initDeliveryMethod();
+  }
+
+  initDeliveryMethods() {
     this.checkoutService.getDeliveryMethod().subscribe({
       next: response => {
         if (response.length > 0) {
           this.deliveryMethods = response;
-          this.setDeliveryMethod(response[0].id);
-          this.setShippingPrice(response[0].price);
         }
       },
       error: error => console.log(error)
     })
   }
 
-  setDeliveryMethod(methodId: number) {
-    this.checkoutForm?.get('deliveryForm')?.patchValue({ deliveryMethod: methodId });
+  initDeliveryMethod() {
+    const basket = this.basketService.getCurrentBasketValue();
+
+    if (basket && basket.deliveryMethodId) {
+      this.checkoutForm?.get('deliveryForm')?.patchValue({ deliveryMethod: basket.deliveryMethodId });
+    }
   }
 
-  setShippingPrice(price: number) {
-    this.basketService.setShippingPrice(price)
+
+  setShippingPrice(deliveryMethod: DeliveryMethod) {
+    this.basketService.setShippingPrice(deliveryMethod)
   }
 }

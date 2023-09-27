@@ -2,7 +2,7 @@
     <div class="row" formGroupName="deliveryForm">
         <div class="form-group col-6 mt-3" *ngFor="let method of deliveryMethods">
             <input type="radio" class="form-check-input" id="{{method.id}}" [value]="method.id"
-                formControlName="deliveryMethod" (click)="setShippingPrice(method.price)">
+                formControlName="deliveryMethod" (click)="setShippingPrice(method)">
             <label for="{{method.id}}" class="form-check-label mx-2">
                 <strong>{{method.shortName}} - {{method.price | currency}}</strong>
                 <br>
@@ -17,7 +17,7 @@
         <fa-icon [icon]="faIcon.faArrowLeft"></fa-icon>
         Back to address
     </button>
-    <button class="btn btn-danger" cdkStepperNext>
+    <button class="btn btn-danger" [disabled]="checkoutForm?.get('deliveryForm')?.invalid" cdkStepperNext>
         Go to review <fa-icon [icon]="faIcon.faArrowRight"></fa-icon>
     </button>
 </div>
