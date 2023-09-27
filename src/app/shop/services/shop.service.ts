@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pagination } from '../../shared/models/pagination';
 import { Product } from '../../shared/models/product';
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { Type } from 'src/app/shared/models/type';
 import { Brand } from 'src/app/shared/models/brand';
 import { ProductParams } from 'src/app/shared/models/productParams';
@@ -13,6 +13,10 @@ import { environment } from 'src/environments/environment.development';
 })
 export class ShopService {
   private apiUrl: string = environment.apiUrl;
+  //use to cache
+  products: Product[] = []; 
+  types: Type[] = [];
+  brands: Brand[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -26,17 +30,36 @@ export class ShopService {
     params = params.append('pageSize', prodcutParams.pageSize)
     if (prodcutParams.search) params = params.append('search', prodcutParams.search);
 
-    return this.http.get<Pagination<Product[]>>(this.apiUrl + 'products', { params: params });
+    return this.http.get<Pagination<Product[]>>(this.apiUrl + 'products', { params: params }).pipe(
+      map(response => {
+        this.products = response.data;
+        return response;
+      })
+    );
   }
 
   getProduct(id: number): Observable<Product> {
+    const product = this.products.find(x => x.id === id);
+    if (product) return of(product);
     return this.http.get<Product>(this.apiUrl + 'products/' + id);
   }
-  
+
   getProductTypes(): Observable<Type[]> {
-    return this.http.get<Type[]>(this.apiUrl + 'products/types');
+    if (this.types.length > 0) return of(this.types);
+    return this.http.get<Type[]>(this.apiUrl + 'products/types').pipe(
+      map(response => {
+        this.types = response;
+        return response;
+      })
+    );;
   }
   getProductBrands(): Observable<Brand[]> {
-    return this.http.get<Brand[]>(this.apiUrl + 'products/brands');
+    if (this.brands.length > 0) return of(this.brands);
+    return this.http.get<Brand[]>(this.apiUrl + 'products/brands').pipe(
+      map(response => {
+        this.brands = response;
+        return response;
+      })
+    );;
   }
 }
