@@ -3,7 +3,7 @@
         <section class="col-3" *ngIf="types.length > 0 && brands.length > 0">
             <h5 class="mb-2 text-success">Sort</h5>
             <select class="form-select" aria-label="Default select example" (change)="onSortSelected($event)">
-                <option *ngFor="let option of sortOptions" [value]="option.value">
+                <option *ngFor="let option of sortOptions" [selected]="productParams.sort == option.value" [value]="option.value">
                     {{option.name}}</option>
             </select>
             <h5 class="my-2 text-success">Brands</h5>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize"
+                <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize" [pageNumber]="productParams.pageIndex"
                     (pagerChanged)="onPageChanged($event)"> </app-pager>
             </div>
         </section>

@@ -16,7 +16,7 @@ export class ShopComponent implements OnInit {
   products: Product[] = [];
   types: Type[] = [];
   brands: Brand[] = [];
-  productParams = new ProductParams();
+  productParams: ProductParams;
   pageCount: number = 0;
 
   sortOptions = [
@@ -26,7 +26,7 @@ export class ShopComponent implements OnInit {
   ]
 
   constructor(private shopService: ShopService) {
-
+    this.productParams = shopService.getProductParams();
   }
 
   ngOnInit(): void {
@@ -36,11 +36,9 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
-    this.shopService.getProducts(this.productParams).subscribe({
+    this.shopService.getProducts().subscribe({
       next: response => {
         this.products = response.data;
-        this.productParams.pageIndex = response.pageIndex;
-        this.productParams.pageSize = response.pageSize;
         this.pageCount = response.pageCount;
       },
       error: error => console.log(error),
@@ -62,38 +60,49 @@ export class ShopComponent implements OnInit {
   }
 
   onBrandSelected(brandId: number) {
+    this.productParams = this.shopService.getProductParams();
     this.productParams.brandId = brandId;
     this.productParams.pageIndex = 1;
+    this.shopService.setProductParams(this.productParams);
     this.getProducts();
   }
 
   onTypeSelected(typeId: number) {
+    this.productParams = this.shopService.getProductParams();
     this.productParams.typeId = typeId;
     this.productParams.pageIndex = 1;
+    this.shopService.setProductParams(this.productParams);
     this.getProducts();
   }
 
   onSortSelected(event: any) {
+    this.productParams = this.shopService.getProductParams();
     this.productParams.sort = event.target.value;
+    this.shopService.setProductParams(this.productParams);
     this.getProducts();
   }
 
   onPageChanged(event: any) {
     if (this.productParams.pageIndex !== event) {
+      this.productParams = this.shopService.getProductParams();
       this.productParams.pageIndex = event;
+      this.shopService.setProductParams(this.productParams);
       this.getProducts();
     }
   }
 
   onSearch() {
+    this.productParams = this.shopService.getProductParams();
     this.productParams.search = this.searchTerm?.nativeElement.value;
     this.productParams.pageIndex = 1;
+    this.shopService.setProductParams(this.productParams);
     this.getProducts();
   }
 
   onReset() {
     if (this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.productParams = new ProductParams();
+    this.shopService.setProductParams(this.productParams);
     this.getProducts();
   }
 }
