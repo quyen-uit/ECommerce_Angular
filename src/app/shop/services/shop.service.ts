@@ -40,7 +40,7 @@ export class ShopService {
     if (this.productParams.typeId) params = params.append('typeId', this.productParams.typeId);
     if (this.productParams.brandId) params = params.append('brandId', this.productParams.brandId)
     params = params.append('sort', this.productParams.sort)
-    params = params.append('pageIndex', this.productParams.pageIndex)
+    params = params.append('pageNumber', this.productParams.pageNumber)
     params = params.append('pageSize', this.productParams.pageSize)
     if (this.productParams.search) params = params.append('search', this.productParams.search);
 

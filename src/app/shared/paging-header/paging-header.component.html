@@ -1,8 +1,8 @@
-<header *ngIf="pageSize && pageIndex && pageCount">
-    <span>Showing <strong>{{(pageIndex - 1)*pageSize +1}}
+<header *ngIf="pageSize && pageNumber && pageCount">
+    <span>Showing <strong>{{(pageNumber - 1)*pageSize +1}}
             <span> - </span>
-            {{pageIndex * pageSize > pageCount
+            {{pageNumber * pageSize > pageCount
             ? pageCount
-            : pageIndex * pageSize }}</strong> of
+            : pageNumber * pageSize }}</strong> of
         <strong>{{pageCount}}</strong> results.</span>
 </header>

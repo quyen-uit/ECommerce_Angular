@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class PagingHeaderComponent {
   @Input() pageSize?: number;
-  @Input() pageIndex?: number;
+  @Input() pageNumber?: number;
   @Input() pageCount?: number;
 }

@@ -22,7 +22,7 @@
         <section *ngIf="pageCount > 0" class="col-9">
             <div class="d-flex justify-content-between align-items-center pb-2">
                 <app-paging-header [pageCount]="pageCount" [pageSize]="productParams.pageSize"
-                    [pageIndex]="productParams.pageIndex"></app-paging-header>
+                    [pageNumber]="productParams.pageNumber"></app-paging-header>
                 <div class="d-flex justify-content-between align-items-center">
                     <input type="text" placeholder="Search" class="form-control" #search>
                     <button (click)="onSearch()" class="btn btn-outline-secondary mx-2">Search</button>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize" [pageNumber]="productParams.pageIndex"
+                <app-pager [pageCount]="pageCount" [pageSize]="productParams.pageSize" [pageNumber]="productParams.pageNumber"
                     (pagerChanged)="onPageChanged($event)"> </app-pager>
             </div>
         </section>
