@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Product } from './shared/models/product';
-import { ShopService } from './shop/services/shop.service';
 import { BasketService } from './basket/basket.service';
 import { AccountService } from './account/account.service';
 

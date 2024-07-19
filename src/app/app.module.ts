@@ -16,20 +16,27 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AppLayoutComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
+    PaginationModule.forRoot(),
+    CarouselModule.forRoot(),
+
+    // app
+    AppRoutingModule,
     CoreModule,
     HomeModule,
-    PaginationModule.forRoot(),
-    CarouselModule.forRoot()
+    AdminModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},

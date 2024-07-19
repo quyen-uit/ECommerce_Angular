@@ -7,18 +7,29 @@ import { TestErrorsComponent } from './core/test-errors/test-errors.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AppLayoutComponent } from './app-layout/app-layout.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
-  { path: 'test-error', component: TestErrorsComponent },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: 'server-error', component: ServerErrorComponent },
-  { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
-  { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) },
-  { path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule) },
-  { path: 'order', canActivate: [AuthGuard], loadChildren: () => import('./order/order.module').then(m => m.OrderModule),data: { breadcrumb: 'Order' }  },
-  { path: 'checkout', canActivate: [AuthGuard], loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: '',
+    component: AppLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
+      { path: 'test-error', component: TestErrorsComponent },
+      { path: 'not-found', component: NotFoundComponent },
+      { path: 'server-error', component: ServerErrorComponent },
+      { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+      { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) },
+      { path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule) },
+      { path: 'order', canActivate: [AuthGuard], loadChildren: () => import('./order/order.module').then(m => m.OrderModule), data: { breadcrumb: 'Order' } },
+      { path: 'checkout', canActivate: [AuthGuard], loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) },
+      { path: '**', redirectTo: '', pathMatch: 'full' },
+    ]
+  },
 ];
 
 @NgModule({
