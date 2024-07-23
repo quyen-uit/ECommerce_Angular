@@ -7,11 +7,10 @@ import { ProductComponent } from './product/product.component';
 import { AdminLayoutComponent } from './layout/layout.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { TopbarComponent } from './topbar/topbar.component';
-
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
-import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { SharedModule } from '../shared/shared.module';
+import { ProductBrandComponent } from './product-brand/product-brand.component';
+import { ColorComponent } from './color/color.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +18,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ProductComponent,
     AdminLayoutComponent,
     SidenavComponent,
-    TopbarComponent
+    TopbarComponent,
+    ProductBrandComponent,
+    ColorComponent,
+    CategoryComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule
+    SharedModule
   ]
 })
 export class AdminModule { }

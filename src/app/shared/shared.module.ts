@@ -14,6 +14,13 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
 import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
 import { RouterModule } from '@angular/router';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import {LayoutModule} from '@angular/cdk/layout';
+
 @NgModule({
   declarations: [
     PagingHeaderComponent,
@@ -32,7 +39,14 @@ import { RouterModule } from '@angular/router';
     BsDropdownModule.forRoot(),
     FontAwesomeModule,
     CdkStepperModule,
-    RouterModule
+    RouterModule,
+
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    LayoutModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -46,7 +60,13 @@ import { RouterModule } from '@angular/router';
     FontAwesomeModule,
     CdkStepperModule,
     StepperComponent,
-    BasketSummaryComponent
+    BasketSummaryComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    LayoutModule
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,13 @@
-<!-- admin/topbar/topbar.component.html -->
 <mat-toolbar color="primary">
-    <span>Admin Panel</span>
+    <button mat-icon-button aria-label="Menu icon" (click)="handleToggleMenu()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Admin Dashboard</h1>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label="Menu icon">
+        <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Menu icon">
+        <mat-icon>account_circle</mat-icon>
+    </button>
 </mat-toolbar>
-  
