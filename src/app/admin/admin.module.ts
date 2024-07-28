@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductBrandComponent } from './product-brand/product-brand.component';
 import { ColorComponent } from './color/color.component';
 import { CategoryComponent } from './category/category.component';
+import { CategoryFormComponent } from './category/category-form/category-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CategoryComponent } from './category/category.component';
     TopbarComponent,
     ProductBrandComponent,
     ColorComponent,
-    CategoryComponent
+    CategoryComponent,
+    CategoryFormComponent
   ],
   imports: [
     CommonModule,

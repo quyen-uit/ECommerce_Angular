@@ -7,6 +7,7 @@ import { AdminLayoutComponent } from './layout/layout.component';
 import { ColorComponent } from './color/color.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductBrandComponent } from './product-brand/product-brand.component';
+import { CategoryFormComponent } from './category/category-form/category-form.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,8 @@ const routes: Routes = [
       { path: 'product-brand', component: ProductBrandComponent },
       { path: 'color', component: ColorComponent },
       { path: 'category', component: CategoryComponent },
+      { path: 'category/create', component: CategoryFormComponent },
+      { path: 'category/:id', component: CategoryFormComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

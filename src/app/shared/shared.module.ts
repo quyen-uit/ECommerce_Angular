@@ -10,7 +10,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StepperComponent } from './components/stepper/stepper.component';
-import {CdkStepperModule} from '@angular/cdk/stepper';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
 import { RouterModule } from '@angular/router';
 
@@ -19,7 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
-import {LayoutModule} from '@angular/cdk/layout';
+import { MatCardModule } from '@angular/material/card';
+import { LayoutModule } from '@angular/cdk/layout';
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,14 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    LayoutModule
+    LayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -66,7 +78,12 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    LayoutModule
+    LayoutModule,
+    MatCardModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }

@@ -8,7 +8,7 @@ h2 {
 
 .menu {
     span.active {
-        background-color: gray;
+        background-color: #d5d7db;
     }
 }
 
@@ -32,6 +32,11 @@ mat-sidenav {
     }
 }
 
+mat-sidenav-content {
+    padding: 1rem;
+}
+
 .mdc-list-item {
     padding: 0px !important;
 }
+
