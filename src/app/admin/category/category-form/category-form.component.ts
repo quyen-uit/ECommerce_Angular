@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateCategory } from 'src/app/shared/models/category';
 import { CategoryService } from 'src/app/shared/services/category-service';
+import { SweetAlertService } from 'src/app/shared/services/sweet-alert.service';
  
 @Component({
   selector: 'app-category-form',
@@ -19,7 +20,8 @@ export class CategoryFormComponent implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sweetAlertService: SweetAlertService
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +51,12 @@ export class CategoryFormComponent implements OnInit {
       const categoryData: CreateCategory = this.categoryForm.value;
       if (this.isEditMode) {
         this.categoryService.updateCategory(this.categoryId!, categoryData).subscribe(() => {
+          this.sweetAlertService.success('Category updated successfully');
           this.router.navigate(['/admin/category']);
         });
       } else {
         this.categoryService.createCategory(categoryData).subscribe(() => {
+          this.sweetAlertService.success('Category created successfully');
           this.router.navigate(['/admin/category']);
         });
       }

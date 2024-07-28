@@ -13,6 +13,7 @@ import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
 import { RouterModule } from '@angular/router';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -45,6 +46,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FontAwesomeModule,
     CdkStepperModule,
     RouterModule,
+    SweetAlert2Module.forRoot(),
 
     MatIconModule,
     MatButtonModule,
@@ -73,6 +75,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CdkStepperModule,
     StepperComponent,
     BasketSummaryComponent,
+
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
