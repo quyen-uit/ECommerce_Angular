@@ -4,7 +4,7 @@ import { Product } from '../shared/models/product';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
 import { HttpParams } from '@angular/common/http';
-import { ProductParams } from '../shared/models/productParams';
+import { ProductParams } from '../shared/params/productParams';
 
 @Component({
   selector: 'app-shop',

@@ -26,6 +26,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule,
+    MatSelectModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -86,7 +90,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

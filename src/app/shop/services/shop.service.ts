@@ -5,8 +5,8 @@ import { Product } from '../../shared/models/product';
 import { Observable, map, of } from 'rxjs';
 import { Type } from 'src/app/shared/models/type';
 import { Brand } from 'src/app/shared/models/brand';
-import { ProductParams } from 'src/app/shared/models/productParams';
 import { environment } from 'src/environments/environment.development';
+import { ProductParams } from 'src/app/shared/params/productParams';
 
 @Injectable({
   providedIn: 'root'

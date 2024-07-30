@@ -1,11 +1,27 @@
 <mat-card>
     <div class="card-header">
-        <mat-card-title>Categories</mat-card-title>
-        <button mat-raised-button color="primary" (click)="createCategory()">Create</button>
+        <div class="d-flex gap-3 align-items-center">
+            <mat-card-title>Categories</mat-card-title>
+            <button mat-raised-button color="primary" (click)="createCategory()">Create</button>
+        </div>
+        <div class="d-flex gap-3 align-items-center">
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select (selectionChange)="onStatusChange($event)">
+                    <mat-option *ngFor="let item of selectValues" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput [formControl]="searchControl" placeholder="Ex. Name, Order, Active">
+            </mat-form-field>
+        </div>
     </div>
     <mat-card-content>
 
-        <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -14,13 +30,13 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
                 <td mat-cell *matCellDef="let category"> {{category.name}} </td>
             </ng-container>
 
             <!-- Order Column -->
             <ng-container matColumnDef="order">
-                <th mat-header-cell *matHeaderCellDef> Order </th>
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Order </th>
                 <td mat-cell *matCellDef="let category"> {{category.order}} </td>
             </ng-container>
 

@@ -1,5 +1,11 @@
 .cdk-column-actions {
-    width: 200px; /* Adjust the width as needed */
-    min-width: 200px; /* Prevents shrinking below this width */
+    width: 200px;
+    /* Adjust the width as needed */
+    min-width: 200px;
+    /* Prevents shrinking below this width */
     text-align: center;
+}
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    height: 0px;
 }
