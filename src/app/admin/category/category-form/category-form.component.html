@@ -1,4 +1,4 @@
-<mat-card class="category-form-card">
+<mat-card>
   <mat-card-title class="card-header">{{ isEditMode ? 'Edit Category' : 'Create Category' }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="row">

@@ -1,8 +1,6 @@
-export class ProductParams {
+import BaseParams from "./baseParams";
+
+export class ProductParams extends BaseParams {
     typeId: number = 0;
     brandId: number = 0;
-    sort: string = 'default';
-    pageNumber: number = 1;
-    pageSize: number = 6;
-    search: string = '';
 }
