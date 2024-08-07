@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Color, CreateColor } from '../models/color';
 import { ColorParams } from '../params/colorParams';
+import { Pagination } from '../models/pagination';
 
 @Injectable({
     providedIn: 'root',
@@ -13,14 +14,14 @@ export class ColorService {
 
     constructor(private http: HttpClient) { }
 
-    getColors(colorParams: ColorParams): Observable<Color[]> {
+    getColors(colorParams: ColorParams): Observable<Pagination<Color[]>> {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('search', colorParams.search);
         httpParams = httpParams.append('sort', colorParams.sort);
         httpParams = httpParams.append('pageNumber', colorParams.pageNumber)
         httpParams = httpParams.append('pageSize', colorParams.pageSize)
 
-        return this.http.get<Color[]>(`${this.baseUrl}/all`, { params: httpParams });
+        return this.http.get<Pagination<Color[]>>(`${this.baseUrl}/all`, { params: httpParams });
     }
 
     createColor(color: CreateColor): Observable<Color> {

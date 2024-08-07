@@ -28,6 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatCheckboxModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -92,7 +94,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatCheckboxModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule
   ]
 })
 export class SharedModule { }
