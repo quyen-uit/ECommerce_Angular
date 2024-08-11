@@ -13,6 +13,7 @@ import { ColorComponent } from './color/color.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryFormComponent } from './category/category-form/category-form.component';
 import { ColorFormComponent } from './color/color-form/color-form.component';
+import { ProductBrandFormComponent } from './product-brand/product-brand-form/product-brand-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ColorFormComponent } from './color/color-form/color-form.component';
     ColorComponent,
     CategoryComponent,
     CategoryFormComponent,
-    ColorFormComponent
+    ColorFormComponent,
+    ProductBrandFormComponent
   ],
   imports: [
     CommonModule,

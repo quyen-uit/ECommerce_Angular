@@ -12,8 +12,7 @@
         </div>
     </div>
     <mat-card-content>
-
-        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+        <table *ngIf="dataSource.data.length" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- Order Number Column -->
             <ng-container matColumnDef="order">
                 <th mat-header-cell *matHeaderCellDef> # </th>
@@ -44,7 +43,7 @@
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
         </table>
-        <mat-paginator [length]="pageLength" [pageSizeOptions]="pageSizes" (page)="pageChangeEvent($event)"
+        <mat-paginator *ngIf="dataSource.data.length" [length]="pageLength" [pageSizeOptions]="pageSizes" (page)="pageChangeEvent($event)"
             aria-label="Select page" />
     </mat-card-content>
 </mat-card>

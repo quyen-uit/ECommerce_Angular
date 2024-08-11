@@ -9,6 +9,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductBrandComponent } from './product-brand/product-brand.component';
 import { CategoryFormComponent } from './category/category-form/category-form.component';
 import { ColorFormComponent } from './color/color-form/color-form.component';
+import { ProductBrandFormComponent } from './product-brand/product-brand-form/product-brand-form.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,9 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'product', component: ProductComponent },
-      { path: 'product-brand', component: ProductBrandComponent },
+      { path: 'brand', component: ProductBrandComponent },
+      { path: 'brand/create', component: ProductBrandFormComponent },
+      { path: 'brand/:id', component: ProductBrandFormComponent },
       { path: 'color', component: ColorComponent },
       { path: 'color/create', component: ColorFormComponent },
       { path: 'color/:id', component: ColorFormComponent },

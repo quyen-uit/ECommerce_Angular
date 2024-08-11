@@ -1,1 +1,49 @@
-<p>product-brand works!</p>
+<mat-card>
+    <div class="card-header">
+        <div class="d-flex gap-3 align-items-center">
+            <mat-card-title>ProductBrands</mat-card-title>
+            <button mat-raised-button color="primary" (click)="createProductBrand()">Create</button>
+        </div>
+        <div class="d-flex gap-3 align-items-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput [formControl]="searchControl" placeholder="Ex. Name">
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-card-content>
+        <table *ngIf="dataSource.data.length" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Order Number Column -->
+            <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let category; let i = index"> {{ getOrderNumber(i) }} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let productBrand"> {{productBrand.name}} </td>
+            </ng-container>
+
+            <!-- HexCode Column -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let productBrand"> {{productBrand.description}} </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="action"> Actions </th>
+                <td mat-cell *matCellDef="let productBrand">
+                    <button mat-button color="accent" (click)="editProductBrand(productBrand.id)">Edit</button>
+                    <button mat-button color="warn" (click)="deleteProductBrand(productBrand.id)">Delete</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+        <mat-paginator *ngIf="dataSource.data.length" [length]="pageLength" [pageSizeOptions]="pageSizes" (page)="pageChangeEvent($event)"
+            aria-label="Select page" />
+    </mat-card-content>
+</mat-card>

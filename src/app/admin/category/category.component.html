@@ -21,7 +21,7 @@
     </div>
     <mat-card-content>
 
-        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+        <table *ngIf="dataSource.data.length" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> ID </th>
