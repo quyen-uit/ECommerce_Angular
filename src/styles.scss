@@ -33,6 +33,8 @@ mat-card {
         justify-content: space-between;
         align-items: center;
         margin: 1rem 2rem;
+        gap: 1rem !important;
+        flex-wrap: wrap;
     }
 
 }
