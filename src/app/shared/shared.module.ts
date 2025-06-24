@@ -22,14 +22,25 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
-import {MatTableModule} from '@angular/material/table';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
-import {MatSelectModule} from '@angular/material/select';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
+import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [
     PagingHeaderComponent,
@@ -37,7 +48,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     OrderTotalsComponent,
     TextInputComponent,
     StepperComponent,
-    BasketSummaryComponent
+    BasketSummaryComponent,
+    DynamicTableComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +62,15 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     CdkStepperModule,
     RouterModule,
     SweetAlert2Module.forRoot(),
+
+    TranslateModule.forRoot({
+      defaultLanguage: 'vi',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
 
     MatIconModule,
     MatButtonModule,
@@ -66,7 +87,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatCheckboxModule,
     MatSortModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -81,6 +105,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     CdkStepperModule,
     StepperComponent,
     BasketSummaryComponent,
+    DynamicTableComponent,
 
     MatIconModule,
     MatButtonModule,
@@ -95,7 +120,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatCheckboxModule,
     MatSortModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule
   ]
 })
 export class SharedModule { }

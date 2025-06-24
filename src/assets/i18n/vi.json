@@ -1,0 +1,136 @@
+{
+    "HOME": "Trang chủ",
+    "LOGIN": "Đăng nhập",
+    "REGISTER": "Đăng ký",
+    "LOGOUT": "Đăng xuất",
+    "PROFILE": "Hồ sơ",
+    "SETTINGS": "Cài đặt",
+    "DASHBOARD": "Bảng điều khiển",
+    "LANGUAGE": "Ngôn ngữ",
+    "NOTIFICATIONS": "Thông báo",
+    "HELP": "Trợ giúp",
+    "ABOUT": "Giới thiệu",
+    "CONTACT": "Liên hệ",
+    "TERMS": "Điều khoản sử dụng",
+    "PRIVACY": "Chính sách bảo mật",
+    "SUBMIT": "Gửi",
+    "RESET": "Đặt lại",
+    "APPLY": "Áp dụng",
+    "SEARCH": "Tìm kiếm",
+    "FILTER": "Lọc",
+    "SORT": "Sắp xếp",
+    "VIEW": "Xem",
+    "DOWNLOAD": "Tải xuống",
+    "UPLOAD": "Tải lên",
+    "EXPORT": "Xuất",
+    "IMPORT": "Nhập",
+    "CONFIRM": "Xác nhận",
+    "CANCEL": "Hủy",
+    "SAVE": "Lưu",
+    "DELETE": "Xóa",
+    "EDIT": "Chỉnh sửa",
+    "ADD": "Thêm mới",
+    "ACTIONS": "Hành động",
+    "DETAILS": "Chi tiết",
+    "STATUS": "Trạng thái",
+    "ACTIVE": "Kích hoạt",
+    "INACTIVE": "Không kích hoạt",
+    "DATE": "Ngày",
+    "TIME": "Thời gian",
+    "CREATED_AT": "Ngày tạo",
+    "UPDATED_AT": "Ngày cập nhật",
+    "USER": {
+        "TITLE": "Người dùng",
+        "NAME": "Tên người dùng",
+        "EMAIL": "Email",
+        "PASSWORD": "Mật khẩu",
+        "ROLE": "Vai trò",
+        "ADD_USER": "Thêm người dùng mới",
+        "UPDATE_SUCCESS": "Cập nhật người dùng thành công!",
+        "DELETE_SUCCESS": "Xóa người dùng thành công!"
+    },
+    "CATEGORY": {
+        "TITLE": "Danh mục",
+        "NAME": "Tên danh mục",
+        "DESCRIPTION": "Mô tả",
+        "ADD_CATEGORY": "Thêm danh mục mới",
+        "UPDATE_SUCCESS": "Cập nhật danh mục thành công!",
+        "DELETE_SUCCESS": "Xóa danh mục thành công!"
+    },
+    "ORDER": {
+        "TITLE": "Đơn hàng",
+        "ORDER_ID": "Mã đơn hàng",
+        "CUSTOMER": "Khách hàng",
+        "TOTAL_AMOUNT": "Tổng số tiền",
+        "ORDER_DATE": "Ngày đặt hàng"
+    },
+    "PRODUCT": {
+        "TITLE": "Sản phẩm",
+        "NAME": "Tên sản phẩm",
+        "DESCRIPTION": "Mô tả",
+        "PRICE": "Giá",
+        "CATEGORY": "Danh mục",
+        "STOCK": "Số lượng tồn kho",
+        "COLOR": "Màu sắc",
+        "SIZE": "Kích cỡ",
+        "ADD_TO_BASKET": "Thêm vào giỏ hàng",
+        "UPDATE_SUCCESS": "Cập nhật sản phẩm thành công!",
+        "DELETE_SUCCESS": "Xóa sản phẩm thành công!",
+        "MANAGEMENT": "Quản lý sản phẩm"
+    },
+    "BASKET": {
+        "TITLE": "Giỏ hàng",
+        "EMPTY_MESSAGE": "Giỏ hàng của bạn đang trống.",
+        "TOTAL": "Tổng tiền",
+        "CHECKOUT": "Thanh toán",
+        "REMOVE_ITEM": "Xóa mục này",
+        "QUANTITY": "Số lượng"
+    },
+    "INVENTORY": {
+        "TITLE": "Kho hàng",
+        "PRODUCT": "Sản phẩm",
+        "STOCK_QUANTITY": "Số lượng tồn kho",
+        "ADD_STOCK": "Nhập hàng",
+        "REDUCE_STOCK": "Xuất hàng",
+        "INVENTORY_ADJUSTMENT": "Điều chỉnh tồn kho",
+        "UPDATE_SUCCESS": "Cập nhật kho hàng thành công!"
+    },
+    "BRAND": {
+        "TITLE": "Thương hiệu",
+        "NAME": "Tên thương hiệu",
+        "ADD_BRAND": "Thêm thương hiệu mới",
+        "DELETE_SUCCESS": "Xóa thương hiệu thành công!"
+    },
+    "SIZE": {
+        "TITLE": "Kích cỡ",
+        "NAME": "Tên kích cỡ",
+        "ADD_SIZE": "Thêm kích cỡ mới",
+        "DELETE_SUCCESS": "Xóa kích cỡ thành công!"
+    },
+    "COLOR": {
+        "TITLE": "Màu sắc",
+        "NAME": "Tên màu sắc",
+        "HEX_CODE": "Mã màu (HEX)",
+        "ADD_COLOR": "Thêm màu mới",
+        "DELETE_SUCCESS": "Xóa màu sắc thành công!"
+    },
+    "PRICE_ADJUSTMENT": {
+        "TITLE": "Điều chỉnh giá",
+        "PRODUCT": "Sản phẩm",
+        "OLD_PRICE": "Giá cũ",
+        "NEW_PRICE": "Giá mới",
+        "ADJUSTMENT_REASON": "Lý do điều chỉnh",
+        "UPDATE_SUCCESS": "Cập nhật điều chỉnh giá thành công!"
+    },
+    "ERRORS": {
+        "REQUIRED": "Trường này là bắt buộc.",
+        "INVALID_INPUT": "Dữ liệu nhập không hợp lệ.",
+        "NOT_FOUND": "Không tìm thấy dữ liệu.",
+        "SERVER_ERROR": "Có lỗi xảy ra trên máy chủ."
+    },
+    "MESSAGES": {
+        "CONFIRM_DELETE": "Bạn có chắc chắn muốn xóa mục này?",
+        "LOADING": "Đang tải...",
+        "SUCCESS": "Thao tác thành công!"
+    }
+}

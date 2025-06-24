@@ -1,0 +1,104 @@
+<mat-card class="dynamic-table-card">
+    <mat-card-header>
+        <mat-card-title class="card-title">{{ title | translate }}</mat-card-title>
+        <div class="control-bar">
+            <div>
+                <button mat-raised-button color="primary" [matMenuTriggerFor]="columnMenu">
+                    Columns
+                </button>
+                <mat-menu #columnMenu="matMenu">
+                    <button mat-menu-item *ngFor="let col of columns">
+                        <mat-checkbox [checked]="col.visible" (change)="toggleColumnVisibility(col.key)">
+                            {{ col.label }}
+                        </mat-checkbox>
+                    </button>
+                </mat-menu>
+            </div>
+            <button mat-raised-button color="accent" (click)="onAdd()">Add New</button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 dynamic-table">
+            <!-- Data Columns -->
+            <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ column.label }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container [ngSwitch]="column.type">
+                        <span *ngSwitchDefault>{{ element[column.key] }}</span>
+                        <span *ngSwitchCase="'bool'">{{
+                            element[column.key] ? "Yes" : "No"
+                            }}</span>
+                        <span *ngSwitchCase="'date'">{{ element[column.key] | date }}</span>
+                        <ng-container *ngSwitchCase="'action'">
+                            <button mat-icon-button color="primary" (click)="onEdit(element)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="onDelete(element)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ng-container>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <!-- Filter Row -->
+            <ng-container *ngFor="let column of columns" [matColumnDef]="column.key + '_filter'">
+                <th mat-header-cell *matHeaderCellDef>
+                    <ng-container [ngSwitch]="column.type">
+                        <!-- Text -->
+                        <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                            <input matInput (keyup)="applyFilter($event.target, column.key)"
+                                placeholder="Filter {{ column.label }}" />
+                        </mat-form-field>
+
+                        <!-- Boolean -->
+                        <mat-form-field *ngSwitchCase="'bool'" appearance="outline">
+                            <mat-select (selectionChange)="applyFilter($event.value, column.key)">
+                                <mat-option [value]="true">True</mat-option>
+                                <mat-option [value]="false">False</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- Number -->
+                        <div *ngSwitchCase="'number'" class="range-filter">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number"
+                                    (input)="applyRangeFilter(column.key, 'min', $event.target)" placeholder="Min" />
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number"
+                                    (input)="applyRangeFilter(column.key, 'max', $event.target)" placeholder="Max" />
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Date -->
+                        <div *ngSwitchCase="'date'" class="range-filter">
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="picker1"
+                                    (dateChange)="applyRangeFilter(column.key, 'min', $event.value)"
+                                    placeholder="From" />
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="picker2"
+                                    (dateChange)="applyRangeFilter(column.key, 'max', $event.value)" placeholder="To" />
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </th>
+            </ng-container>
+
+            <!-- Header and Data Rows -->
+            <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="visibleFilterColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+</mat-card>
