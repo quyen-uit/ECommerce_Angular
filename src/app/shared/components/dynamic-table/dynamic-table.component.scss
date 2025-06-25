@@ -1,22 +1,24 @@
+@use "@angular/material" as mat;
+
 .card-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   color: #333;
   text-transform: uppercase;
-  margin-bottom: 16px;
 }
-
+.table-container {
+  overflow: auto;
+}
 .dynamic-table {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.mat-header-cell {
+.table-header {
   font-weight: 600;
-  background-color: #f1f1f1;
+  background-color: #dadada !important;
   color: #333;
-  border-bottom: 1px solid #e0e0e0;
 }
 .mat-cell {
   color: #444;
@@ -48,4 +50,17 @@ mat-checkbox {
 }
 .mat-row:hover {
   background-color: #f9f9f9;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.table-actions {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }

@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DynamicColumn } from '../../models/common/dynamic-column';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -26,7 +27,10 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
-
+  readonly range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
   dataSource = new MatTableDataSource<any>();
   filters: { [key: string]: any } = {};
   rangeFilters: { [key: string]: { min?: any; max?: any } } = {};
