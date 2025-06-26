@@ -27,8 +27,7 @@ export class ProductComponent {
     { key: 'brand', label: 'Brand', type: 'text', visible: true, sortable: true, filterable: true },
     { key: 'price', label: 'Price', type: 'number', visible: true, sortable: true, filterable: true },
     { key: 'available', label: 'Available', type: 'bool', visible: true, sortable: false, filterable: true },
-    { key: 'created', label: 'Created Date', type: 'date', visible: true, sortable: true, filterable: false },
-    { key: 'actions', label: 'Actions', type: 'action', visible: true, sortable: false, filterable: false },
+    { key: 'created', label: 'Created Date', type: 'date', visible: true, sortable: true, filterable: true },
   ];
 
   productData = [

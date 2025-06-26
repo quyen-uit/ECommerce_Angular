@@ -1,46 +1,35 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  AfterViewInit,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
 import { DynamicColumn } from '../../models/common/dynamic-column';
-import { FormControl, FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dynamic-table',
   templateUrl: './dynamic-table.component.html',
-  styleUrls: ['./dynamic-table.component.scss']
+  styleUrls: ['./dynamic-table.component.scss'],
 })
 export class DynamicTableComponent implements OnInit, AfterViewInit {
-  @Input() data: any[] = [];
   @Input() columns: DynamicColumn[] = [];
-  @Input() loading = false;
-  @Input() title = '';
-
+  @Input() data: any[] = [];
+  @Input() title: string = '';
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
-  readonly range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
-  dataSource = new MatTableDataSource<any>();
-  filters: { [key: string]: any } = {};
-  rangeFilters: { [key: string]: { min?: any; max?: any } } = {};
 
+  dataSource = new MatTableDataSource<any>();
+  filterForm!: FormGroup;
+  selection = new SelectionModel<any>(true, []);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
     this.dataSource.data = this.data;
     this.setupFilterPredicate();
+    this.initFilterForm();
   }
 
   ngAfterViewInit() {
@@ -53,27 +42,30 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   }
 
   get visibleFilterColumns() {
-    return this.columns.filter(c => c.visible && c.type !== 'action').map(c => c.key + '_filter');
+    return this.columns.filter(c => c.visible && c.filterable).map(c => c.key + '_filter');
   }
 
-  applyFilter(value: any, column: string) {
-    this.filters[column] = value;
-    this.updateFilter();
+  initFilterForm() {
+    const group: any = {};
+    this.columns.forEach(col => {
+      if (col.type === 'number') {
+        group[col.key + '_range'] = new FormGroup({ min: new FormControl(''), max: new FormControl('') });
+      } else if (col.type === 'date') {
+        group[col.key + '_range'] = new FormGroup({ start: new FormControl(''), end: new FormControl('') });
+      }
+    });
+    this.filterForm = new FormGroup(group);
+    this.filterForm.valueChanges.subscribe(() => this.applyFiltersFromForm());
   }
 
-  applyRangeFilter(column: string, bound: 'min' | 'max', value: any) {
-    if (!this.rangeFilters[column]) this.rangeFilters[column] = {};
-    this.rangeFilters[column][bound] = value;
-    this.updateFilter();
-  }
-
-  updateFilter() {
+  applyFiltersFromForm() {
+    const formValues = this.filterForm.value;
     const combinedFilters: any = {};
     this.columns.forEach(col => {
-      if (col.type === 'number' || col.type === 'date') {
-        combinedFilters[col.key] = this.rangeFilters[col.key] || {};
-      } else {
-        combinedFilters[col.key] = this.filters[col.key] || '';
+      if (col.type === 'number') {
+        combinedFilters[col.key] = { min: formValues[col.key + '_range']?.min, max: formValues[col.key + '_range']?.max };
+      } else if (col.type === 'date') {
+        combinedFilters[col.key] = { min: formValues[col.key + '_range']?.start, max: formValues[col.key + '_range']?.end };
       }
     });
     this.dataSource.filter = JSON.stringify(combinedFilters);
@@ -83,30 +75,18 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data, filter) => {
       const filters = JSON.parse(filter);
       return this.columns.every(col => {
-        if (!col.visible || col.type === 'action') return true;
-        const key = col.key;
-        const type = col.type;
-        const value = data[key];
-
-        if (type === 'text') {
-          return value?.toLowerCase().includes(filters[key]?.toLowerCase() || '');
-        }
-
-        if (type === 'bool') {
-          return filters[key] === '' || value === filters[key];
-        }
-
+        if (!col.visible) return true;
+        const key = col.key, type = col.type, value = data[key];
+        if (type === 'text') return value?.toLowerCase().includes(filters[key]?.toLowerCase() || '');
+        if (type === 'bool') return filters[key] === '' || value === filters[key];
         if (type === 'number') {
           const range = filters[key];
           return (!range.min || value >= +range.min) && (!range.max || value <= +range.max);
         }
-
         if (type === 'date') {
-          const range = filters[key];
-          const date = new Date(value);
+          const range = filters[key], date = new Date(value);
           return (!range.min || date >= new Date(range.min)) && (!range.max || date <= new Date(range.max));
         }
-
         return true;
       });
     };
@@ -115,6 +95,18 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   toggleColumnVisibility(columnKey: string) {
     const col = this.columns.find(c => c.key === columnKey);
     if (col) col.visible = !col.visible;
+  }
+
+  toggleRow(row: any) {
+    this.selection.toggle(row);
+  }
+
+  toggleAllRows(event: any) {
+    event.checked ? this.selection.select(...this.dataSource.filteredData) : this.selection.clear();
+  }
+
+  isAllSelected() {
+    return this.selection.selected.length === this.dataSource.filteredData.length;
   }
 
   onEdit(row: any) {

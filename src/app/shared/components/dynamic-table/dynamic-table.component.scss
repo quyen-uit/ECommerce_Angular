@@ -1,66 +1,94 @@
-@use "@angular/material" as mat;
+ .card-title {
+   font-size: 28px;
+   font-weight: bold;
+   color: #333;
+   text-transform: uppercase;
+ }
 
-.card-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  text-transform: uppercase;
-}
-.table-container {
-  overflow: auto;
-}
-.dynamic-table {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
 
-.table-header {
-  font-weight: 600;
-  background-color: #dadada !important;
-  color: #333;
-}
-.mat-cell {
-  color: #444;
-  border-bottom: 1px solid #eee;
-}
-.mat-form-field {
-  width: 100%;
-  margin: 0;
-}
-.range-filter {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-button[mat-raised-button] {
-  margin-right: 8px;
-}
-mat-paginator {
-  margin-top: 16px;
-  background-color: white;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
-}
-mat-menu-item {
-  padding: 0 16px;
-}
-mat-checkbox {
-  font-size: 14px;
-}
-.mat-row:hover {
-  background-color: #f9f9f9;
-}
+ button[mat-raised-button] {
+   margin-right: 8px;
+ }
 
-mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
+ mat-paginator {
+   margin-top: 16px;
+   background-color: white;
+   border-radius: 0 0 8px 8px;
+   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
+ }
 
-.table-actions {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-}
+ mat-menu-item {
+   padding: 0 16px;
+ }
+
+ mat-card-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 8px;
+ }
+
+ .table-actions {
+   align-items: center;
+   justify-content: center;
+   display: flex;
+ }
+
+ .table-container {
+   ::ng-deep .mat-mdc-text-field-wrapper {
+     height: 32px !important;
+   }
+
+   ::ng-deep .mat-mdc-form-field-flex {
+     margin-top: -11px !important;
+   }
+
+   ::ng-deep mat-form-field {
+     height: 32px;
+   }
+
+   .mat-mdc-form-field-icon-suffix {
+     padding: 0px !important;
+   }
+
+   mat-form-field,
+   mat-select,
+   mat-checkbox,
+   mat-option {
+     font-size: 12px !important;
+   }
+
+   .mat-row:hover {
+     background-color: #f9f9f9;
+   }
+
+   .table-container {
+     overflow: auto;
+   }
+
+   .dynamic-table {
+     background-color: white;
+     border-radius: 8px;
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+   }
+
+   .table-header {
+     font-weight: 600;
+     background-color: #dadada !important;
+     color: #333;
+   }
+
+   .mat-cell {
+     color: #444;
+     border-bottom: 1px solid #eee;
+   }
+
+
+   .range-filter {
+     display: flex;
+     gap: 8px;
+     align-items: center;
+     width: 212px;
+   }
+
+ }
