@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment.development';
 import { ProductBrand, CreateProductBrand } from '../models/productBrand';
 import { ProductBrandParams } from '../params/productBrandParams';
 import { Pagination } from '../models/pagination';
-
+ 
 @Injectable({
     providedIn: 'root',
 })
@@ -16,7 +16,7 @@ export class ProductBrandService {
 
     getProductBrands(productBrandParams: ProductBrandParams): Observable<Pagination<ProductBrand[]>> {
         let httpParams = new HttpParams();
-        httpParams = httpParams.append('search', productBrandParams.search);
+        // httpParams = httpParams.append('search', productBrandParams.search);
         httpParams = httpParams.append('sort', productBrandParams.sort);
         httpParams = httpParams.append('pageNumber', productBrandParams.pageNumber)
         httpParams = httpParams.append('pageSize', productBrandParams.pageSize)

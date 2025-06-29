@@ -42,7 +42,7 @@ export class ShopService {
     params = params.append('sort', this.productParams.sort)
     params = params.append('pageNumber', this.productParams.pageNumber)
     params = params.append('pageSize', this.productParams.pageSize)
-    if (this.productParams.search) params = params.append('search', this.productParams.search);
+    // if (this.productParams.search) params = params.append('search', this.productParams.search);
 
     return this.http.get<Pagination<Product[]>>(this.apiUrl + 'products', { params: params }).pipe(
       map(response => {

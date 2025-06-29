@@ -1,9 +1,11 @@
 <mat-card class="dynamic-table-card">
     <mat-card-header>
-        <mat-card-title class="card-title">{{ title | translate }}</mat-card-title>
+        <mat-card-title class="card-title">{{ title }}</mat-card-title>
         <div class="table-actions">
-            <button mat-raised-button color="primary" (click)="onAdd()">{{"ADD"|translate}}</button>
-            <button mat-raised-button color="primary">{{"DELETE"|translate}}</button>
+            <button mat-raised-button color="primary" (click)="onAdd()">
+                {{ "ADD" }}
+            </button>
+            <button mat-raised-button color="primary">{{ "DELETE" }}</button>
 
             <button color="primary" mat-icon-button aria-label="Toggle columns" [matMenuTriggerFor]="columnMenu">
                 <mat-icon>view_column</mat-icon>
@@ -19,9 +21,13 @@
     </mat-card-header>
     <mat-card-content>
         <div class="table-container">
-
-            <form [formGroup]="filterForm">
+            <form [formGroup]="filterForm" (keydown.enter)="applyFiltersFromForm()">
                 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 dynamic-table">
+                    <!-- None Column Header-->
+                    <ng-container matColumnDef="none">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                    </ng-container>
+
                     <!-- Selection Column -->
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
@@ -44,10 +50,11 @@
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchDefault>{{ element[column.key] }}</span>
                                     <span *ngSwitchCase="'bool'">
-                                        {{ element[column.key] ? 'Yes' : 'No' }}
+                                        {{ element[column.key] ? "Yes" : "No" }}
                                     </span>
-                                    <span *ngSwitchCase="'date'">{{ element[column.key] | date }}</span>
-
+                                    <span *ngSwitchCase="'date'">{{
+                                        element[column.key] | date
+                                        }}</span>
                                 </ng-container>
                             </td>
                         </ng-container>
@@ -57,6 +64,7 @@
                     <ng-container *ngFor="let column of columns" [matColumnDef]="column.key + '_filter'">
                         <th mat-header-cell *matHeaderCellDef>
                             <ng-container [ngSwitch]="column.type">
+                                <div *ngSwitchCase="'none'"></div>
                                 <!-- Text -->
                                 <mat-form-field *ngSwitchCase="'text'" appearance="outline">
                                     <input matInput [formControlName]="column.key"
@@ -75,20 +83,19 @@
                                 <div *ngSwitchCase="'number'" class="range-filter">
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
-                  $any(filterForm.get(column.key + '_range')?.get('min'))
-                " placeholder="Min" />
+                        $any(filterForm.get(column.key + '_range')?.get('min'))
+                      " placeholder="Min" />
                                     </mat-form-field>
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
-                  $any(filterForm.get(column.key + '_range')?.get('max'))
-                " placeholder="Max" />
+                        $any(filterForm.get(column.key + '_range')?.get('max'))
+                      " placeholder="Max" />
                                     </mat-form-field>
                                 </div>
 
                                 <!-- Date -->
                                 <div *ngSwitchCase="'date'" class="range-filter">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{ column.label }} Range</mat-label>
+                                    <mat-form-field appearance="outline" [floatLabel]="'always'">
                                         <mat-date-range-input [formGroup]="$any(filterForm.get(column.key + '_range'))"
                                             [rangePicker]="picker">
                                             <input matStartDate formControlName="start" placeholder="From" />
@@ -109,6 +116,7 @@
                 </table>
             </form>
         </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" [length]="pagination.pageCount"
+            showFirstLastButtons></mat-paginator>
     </mat-card-content>
 </mat-card>
