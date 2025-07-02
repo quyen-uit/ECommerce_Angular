@@ -11,6 +11,7 @@ import { CategoryFormComponent } from './category/category-form/category-form.co
 import { ColorFormComponent } from './color/color-form/color-form.component';
 import { ProductBrandFormComponent } from './product-brand/product-brand-form/product-brand-form.component';
 import { SizeComponent } from './size/size.component';
+import { SizeFormComponent } from './size/size-form/size-form.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,8 @@ const routes: Routes = [
       { path: 'category/create', component: CategoryFormComponent },
       { path: 'category/:id', component: CategoryFormComponent },
       { path: 'size', component: SizeComponent },
+      { path: 'size/edit/:id', component: SizeFormComponent },
+      { path: 'size/add', component: SizeFormComponent },
       // { path: 'size/create', component: CategoryFormComponent },
       // { path: 'size/:id', component: CategoryFormComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

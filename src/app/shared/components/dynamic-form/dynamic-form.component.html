@@ -1,0 +1,126 @@
+<div class="container my-4">
+    <mat-card class="shadow-sm">
+        <mat-card-header>
+            <mat-card-title class="font-weight-bold mb-2">Dynamic Form</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+                <mat-accordion multi>
+                    <ng-container *ngFor="let section of formConfig">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{ section.section }}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="d-flex flex-wrap pt-3">
+                                <ng-container *ngFor="let field of section.fields">
+                                    <ng-container *ngIf="field.type === 'checkbox'">
+                                        <div class="me-4 mb-3">
+                                            <div class="form-check">
+                                                <mat-checkbox [formControlName]="field.key"
+                                                    [disabled]="field.editable === false">
+                                                    {{ field.label }}
+                                                </mat-checkbox>
+                                            </div>
+                                            <mat-error
+                                                *ngIf="dynamicForm.get(field.key)?.invalid && (dynamicForm.get(field.key)?.dirty || dynamicForm.get(field.key)?.touched)">
+                                                <span *ngIf="dynamicForm.get(field.key)?.errors?.['required']">
+                                                    {{ field.label }} is required.
+                                                </span>
+                                            </mat-error>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+
+                            <div class="row">
+                                <ng-container *ngFor="let field of section.fields">
+                                    <ng-container *ngIf="field.type !== 'checkbox'">
+                                        <div class="col-12 col-md-4 mb-3" [ngSwitch]="field.type">
+                                            <mat-form-field *ngSwitchCase="'text'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="text" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'email'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="email" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'phone'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="tel" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'number'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="number" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'select'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <mat-select [formControlName]="field.key"
+                                                    [disabled]="field.editable === false">
+                                                    <mat-option *ngFor="let option of field.options"
+                                                        [value]="option.value">
+                                                        {{ option.viewValue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'date'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="date" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <mat-form-field *ngSwitchCase="'datetime'" appearance="fill" class="w-100">
+                                                <mat-label>{{ field.label }}</mat-label>
+                                                <input matInput type="datetime-local" [formControlName]="field.key"
+                                                    [disabled]="field.editable === false" />
+                                            </mat-form-field>
+
+                                            <div *ngSwitchCase="'file'" class="file-upload">
+                                                <label>{{ field.label }}</label>
+                                                <input type="file" (change)="onFileChange($event, field.key)"
+                                                    [disabled]="field.editable === false" />
+                                            </div>
+
+                                            <mat-error
+                                                *ngIf="dynamicForm.get(field.key)?.invalid && (dynamicForm.get(field.key)?.dirty || dynamicForm.get(field.key)?.touched)">
+                                                <span *ngIf="dynamicForm.get(field.key)?.errors?.['required']">
+                                                    {{ field.label }} is required.
+                                                </span>
+                                                <span *ngIf="dynamicForm.get(field.key)?.errors?.['email']">
+                                                    Please enter a valid email.
+                                                </span>
+                                                <span *ngIf="dynamicForm.get(field.key)?.errors?.['pattern']">
+                                                    Invalid format.
+                                                </span>
+                                            </mat-error>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </mat-expansion-panel>
+                    </ng-container>
+                </mat-accordion>
+
+                <ng-content select="[form-actions]"></ng-content>
+
+                <div class="text-end mt-4">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="dynamicForm.invalid">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

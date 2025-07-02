@@ -1,7 +1,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { DynamicColumn } from 'src/app/shared/models/common/dynamic-column';
+import { DynamicColumn } from 'src/app/shared/models/common/dynamicColumn';
 
 
 

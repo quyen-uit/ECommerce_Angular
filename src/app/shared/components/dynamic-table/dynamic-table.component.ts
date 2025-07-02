@@ -12,8 +12,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DynamicColumn } from '../../models/common/dynamic-column';
 import { Pagination } from '../../models/common/pagination';
+import BaseParams from '../../params/baseParams';
+import { Router } from '@angular/router';
+import { DynamicColumn } from '../../models/common/dynamicColumn';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -23,6 +25,8 @@ import { Pagination } from '../../models/common/pagination';
 export class DynamicTableComponent implements OnInit, AfterViewInit {
   @Input() columns: DynamicColumn[] = [];
   @Input() title: string = '';
+  @Input() editRoute: string = '';
+  @Input() addRoute: string = '';
 
   private _pagination!: Pagination<any>;
 
@@ -49,15 +53,16 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<any>(true, []);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  constructor(private router: Router) { }
   ngOnInit() {
-    this.setupFilterPredicate();
     this.initFilterForm();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.applyFiltersFromForm();
+
     this.paginator.page.subscribe(() => {
       this.applyFiltersFromForm();
     });
@@ -72,7 +77,7 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
 
   get visibleFilterColumns() {
     return [
-      'none',
+      'search',
       ...this.columns
         .filter((c) => c.visible)
         .map((c) => (c.filterable ? c.key + '_filter' : 'none')),
@@ -86,15 +91,16 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   initFilterForm() {
     const group: any = {};
     this.columns.forEach((col) => {
-      if (col.type === 'number') {
-        group[col.key + '_range'] = new FormGroup({
-          min: new FormControl(''),
-          max: new FormControl(''),
-        });
-      } else if (col.type === 'date') {
-        group[col.key + '_range'] = new FormGroup({
-          start: new FormControl(''),
-          end: new FormControl(''),
+      if (
+        col.type === 'text' ||
+        col.type === 'bool' ||
+        col.type === 'options'
+      ) {
+        group[col.key] = new FormControl('');
+      } else if (col.type === 'number' || col.type === 'date') {
+        group[col.key] = new FormGroup({
+          from: new FormControl(''),
+          to: new FormControl(''),
         });
       }
     });
@@ -106,58 +112,32 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
     const formValues = this.filterForm.value;
     const combinedFilters: any = {};
     this.columns.forEach((col) => {
-      if (col.type === 'number') {
+      if (
+        col.type === 'text' ||
+        col.type === 'bool' ||
+        col.type === 'options'
+      ) {
+        combinedFilters[col.key] = formValues[col.key];
+      } else if (col.type === 'number') {
         combinedFilters[col.key] = {
-          from: formValues[col.key + '_range']?.min,
-          to: formValues[col.key + '_range']?.max,
+          from:
+            formValues[col.key].from !== '' ? +formValues[col.key].from : null,
+          to: formValues[col.key].to !== '' ? +formValues[col.key].to : null,
         };
       } else if (col.type === 'date') {
         combinedFilters[col.key] = {
-          from: formValues[col.key + '_range']?.start,
-          to: formValues[col.key + '_range']?.end,
+          from: formValues[col.key].from,
+          to: formValues[col.key].to,
         };
       }
     });
     // Emit filter and pagination info
     this.getAll.emit({
       filter: combinedFilters,
-      pageNumber: this.paginator?.pageIndex === 0 ? 1 : this.paginator?.pageIndex,
+      pageNumber:
+        this.paginator?.pageIndex === 0 ? 1 : this.paginator?.pageIndex,
       pageSize: this.paginator?.pageSize ?? 5,
     });
-  }
-
-  setupFilterPredicate() {
-    this.dataSource.filterPredicate = (data, filter) => {
-      const filters = JSON.parse(filter);
-      return this.columns.every((col) => {
-        if (!col.visible) return true;
-        const key = col.key,
-          type = col.type,
-          value = data[key];
-        if (type === 'text')
-          return value
-            ?.toLowerCase()
-            .includes(filters[key]?.toLowerCase() || '');
-        if (type === 'bool')
-          return filters[key] === '' || value === filters[key];
-        if (type === 'number') {
-          const range = filters[key];
-          return (
-            (!range.min || value >= +range.min) &&
-            (!range.max || value <= +range.max)
-          );
-        }
-        if (type === 'date') {
-          const range = filters[key],
-            date = new Date(value);
-          return (
-            (!range.min || date >= new Date(range.min)) &&
-            (!range.max || date <= new Date(range.max))
-          );
-        }
-        return true;
-      });
-    };
   }
 
   toggleColumnVisibility(columnKey: string) {
@@ -190,6 +170,9 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   }
 
   onAdd() {
-    this.add.emit();
+    if (this.addRoute) this.router.navigate([this.addRoute]);
+  }
+  onRowDoubleClick(row: any) {
+    if (this.editRoute) this.router.navigate([this.editRoute, row.id]);
   }
 }

@@ -32,12 +32,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';  
 
 import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+ 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -49,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TextInputComponent,
     StepperComponent,
     BasketSummaryComponent,
-    DynamicTableComponent
+    DynamicTableComponent,
+    DynamicFormComponent
   ],
   imports: [
     CommonModule,
@@ -90,7 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    MatExpansionModule
   ],
   exports: [
     PagingHeaderComponent,
@@ -106,6 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StepperComponent,
     BasketSummaryComponent,
     DynamicTableComponent,
+    DynamicFormComponent,
 
     MatIconModule,
     MatButtonModule,
@@ -123,7 +128,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    MatExpansionModule 
   ]
 })
 export class SharedModule { }

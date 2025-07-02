@@ -92,3 +92,12 @@
    }
 
  }
+
+ ::ng-deep .small-select mat-option {
+   font-size: 12px;
+ }
+
+ ::ng-deep .mat-mdc-table .mat-mdc-row:hover {
+   background-color: rgba(0, 0, 0, 0.04); // light gray
+   cursor: pointer;
+ }

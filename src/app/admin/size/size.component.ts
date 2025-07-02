@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { DynamicColumn } from 'src/app/shared/models/common/dynamic-column';
+import { DynamicColumn } from 'src/app/shared/models/common/dynamicColumn';
 import { Pagination } from 'src/app/shared/models/common/pagination';
 import { Size } from 'src/app/shared/models/sizes/size';
-import { SizePaginationParams } from 'src/app/shared/params/SizePaginationParams';
+import { SizePaginationParams } from 'src/app/shared/params/sizePaginationParams';
 import { SizeService } from 'src/app/shared/services/size-service';
 
 @Component({
@@ -24,10 +24,11 @@ export class SizeComponent {
     {
       key: 'sizeType',
       label: 'Type',
-      type: 'text',
+      type: 'options',
       visible: true,
       sortable: true,
-      filterable: false,
+      filterable: true,
+      options: [{ viewValue: 'Character', value: 'Character' }, { viewValue: 'Number', value: 'Number' }]
     },
     {
       key: 'sortOrder',
@@ -42,7 +43,6 @@ export class SizeComponent {
   constructor(private sizeService: SizeService) { }
 
   ngOnInit() {
-    this.getAll({pageNumber: 1, pageSize: 5, sort: 'default', search: ''});
   }
 
   getAll(params: SizePaginationParams) {

@@ -1,0 +1,31 @@
+mat-card {
+    border-radius: 8px;
+}
+
+mat-card-header {
+    padding-bottom: 0;
+}
+
+mat-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+mat-card-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+button[type="submit"] {
+    min-width: 120px;
+}

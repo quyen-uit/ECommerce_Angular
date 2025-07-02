@@ -27,6 +27,14 @@
                     <ng-container matColumnDef="none">
                         <th mat-header-cell *matHeaderCellDef></th>
                     </ng-container>
+                    <ng-container matColumnDef="search">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <button color="primary" (click)="applyFiltersFromForm()" mat-icon-button
+                                aria-label="Search">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </th>
+                    </ng-container>
 
                     <!-- Selection Column -->
                     <ng-container matColumnDef="select">
@@ -74,6 +82,7 @@
                                 <!-- Boolean -->
                                 <mat-form-field *ngSwitchCase="'bool'" appearance="outline">
                                     <mat-select [formControlName]="column.key">
+                                        <mat-option [value]="null"></mat-option>
                                         <mat-option [value]="true">True</mat-option>
                                         <mat-option [value]="false">False</mat-option>
                                     </mat-select>
@@ -83,23 +92,33 @@
                                 <div *ngSwitchCase="'number'" class="range-filter">
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
-                        $any(filterForm.get(column.key + '_range')?.get('min'))
+                        $any(filterForm.get(column.key)?.get('from'))
                       " placeholder="Min" />
                                     </mat-form-field>
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
-                        $any(filterForm.get(column.key + '_range')?.get('max'))
+                        $any(filterForm.get(column.key)?.get('to'))
                       " placeholder="Max" />
                                     </mat-form-field>
                                 </div>
-
+                                <!-- Options -->
+                                <mat-form-field *ngSwitchCase="'options'" appearance="outline">
+                                    <mat-select [formControlName]="column.key" panelClass="small-select">
+                                        <mat-option [value]="null"></mat-option>
+                                        <ng-container *ngFor="let option of column.options">
+                                            <mat-option [value]="option.value">{{
+                                                option.viewValue
+                                                }}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
                                 <!-- Date -->
                                 <div *ngSwitchCase="'date'" class="range-filter">
                                     <mat-form-field appearance="outline" [floatLabel]="'always'">
-                                        <mat-date-range-input [formGroup]="$any(filterForm.get(column.key + '_range'))"
+                                        <mat-date-range-input [formGroup]="$any(filterForm.get(column.key))"
                                             [rangePicker]="picker">
-                                            <input matStartDate formControlName="start" placeholder="From" />
-                                            <input matEndDate formControlName="end" placeholder="To" />
+                                            <input matStartDate formControlName="from" placeholder="From" />
+                                            <input matEndDate formControlName="to" placeholder="To" />
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-date-range-picker #picker></mat-date-range-picker>
@@ -112,11 +131,10 @@
                     <!-- Header and Data Rows -->
                     <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
                     <tr mat-header-row *matHeaderRowDef="visibleFilterColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: visibleColumns" (dblclick)="onRowDoubleClick(row)"></tr>
                 </table>
             </form>
         </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25]" [length]="pagination.pageCount"
-            showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
     </mat-card-content>
 </mat-card>

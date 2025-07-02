@@ -1,8 +1,7 @@
-export interface Size {
+export class Size {
     id?: number;
-    name: string;
-    sortOrder: number;
-    sizeType: string;
+    name: string = '';
+    sortOrder: number = 0;
+    sizeType: string = '';
 }
 
- 
