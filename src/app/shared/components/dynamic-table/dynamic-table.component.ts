@@ -16,6 +16,7 @@ import { Pagination } from '../../models/common/pagination';
 import BaseParams from '../../params/baseParams';
 import { Router } from '@angular/router';
 import { DynamicColumn } from '../../models/common/dynamicColumn';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -23,13 +24,11 @@ import { DynamicColumn } from '../../models/common/dynamicColumn';
   styleUrls: ['./dynamic-table.component.scss'],
 })
 export class DynamicTableComponent implements OnInit, AfterViewInit {
+  private _pagination!: Pagination<any>;
   @Input() columns: DynamicColumn[] = [];
   @Input() title: string = '';
   @Input() editRoute: string = '';
   @Input() addRoute: string = '';
-
-  private _pagination!: Pagination<any>;
-
   @Input()
   set pagination(value: Pagination<any> | undefined) {
     if (value) {
@@ -48,12 +47,15 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   @Output() delete = new EventEmitter<any>();
   @Output() getAll = new EventEmitter<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   dataSource = new MatTableDataSource<any>();
   filterForm!: FormGroup;
   selection = new SelectionModel<any>(true, []);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private translate: TranslateService) { }
+
   ngOnInit() {
     this.initFilterForm();
   }
@@ -61,6 +63,7 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = this.translate.instant('ITEMS_PER_PAGE');
     this.applyFiltersFromForm();
 
     this.paginator.page.subscribe(() => {

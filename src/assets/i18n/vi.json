@@ -39,6 +39,27 @@
     "TIME": "Thời gian",
     "CREATED_AT": "Ngày tạo",
     "UPDATED_AT": "Ngày cập nhật",
+    "FROM": "Từ",
+    "TO": "Đến",
+    "CHARACTER": "Ký tự",
+    "NUMBER": "Số",
+    "TRUE": "Đúng",
+    "FALSE": "Sai",
+    "YES": "Có",
+    "NO": "Không",
+    "GENERAL": "Chung",
+    "ERROR": "Lỗi",
+    "ITEMS_PER_PAGE": "Mục trên mỗi trang",
+    "VALIDATION": {
+        "REQUIRED": "Trường này là bắt buộc.",
+        "INVALID_EMAIL": "Địa chỉ email không hợp lệ.",
+        "INVALID_FORMAT": "Định dạng không hợp lệ.",
+        "MIN_VALUE": "Giá trị phải lớn hơn hoặc bằng {min}.",
+        "MAX_VALUE": "Giá trị phải nhỏ hơn hoặc bằng {max}.",
+        "MIN_LENGTH": "Trường này phải có ít nhất {min} ký tự.",
+        "MAX_LENGTH": "Trường này không được vượt quá {max} ký tự."
+
+    },
     "USER": {
         "TITLE": "Người dùng",
         "NAME": "Tên người dùng",
@@ -104,8 +125,11 @@
     "SIZE": {
         "TITLE": "Kích cỡ",
         "NAME": "Tên kích cỡ",
+        "TYPE": "Loại kích cỡ",
+        "SORT_ORDER": "Thứ tự sắp xếp",
         "ADD_SIZE": "Thêm kích cỡ mới",
-        "DELETE_SUCCESS": "Xóa kích cỡ thành công!"
+        "DELETE_SUCCESS": "Xóa kích cỡ thành công!",
+        "MANAGEMENT": "Quản lý kích cỡ"
     },
     "COLOR": {
         "TITLE": "Màu sắc",

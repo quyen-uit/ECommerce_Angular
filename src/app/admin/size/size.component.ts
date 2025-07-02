@@ -12,10 +12,13 @@ import { SizeService } from 'src/app/shared/services/size-service';
 })
 export class SizeComponent {
   paginationData?: Pagination<Size>;
+  title: string = 'SIZE.MANAGEMENT';
+  addRoute: string = '/admin/size/add';
+  editRoute: string = '/admin/size/edit';
   columns: DynamicColumn[] = [
     {
       key: 'name',
-      label: 'Name',
+      label: 'SIZE.NAME',
       type: 'text',
       visible: true,
       sortable: true,
@@ -23,16 +26,16 @@ export class SizeComponent {
     },
     {
       key: 'sizeType',
-      label: 'Type',
+      label: 'SIZE.TYPE',
       type: 'options',
       visible: true,
       sortable: true,
       filterable: true,
-      options: [{ viewValue: 'Character', value: 'Character' }, { viewValue: 'Number', value: 'Number' }]
+      options: [{ viewValue: 'CHARACTER', value: 'Character' }, { viewValue: 'NUMBER', value: 'Number' }]
     },
     {
       key: 'sortOrder',
-      label: 'Order',
+      label: 'SIZE.SORT_ORDER',
       type: 'number',
       visible: true,
       sortable: true,

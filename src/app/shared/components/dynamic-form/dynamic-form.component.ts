@@ -8,17 +8,16 @@ import { DynamicFieldSection } from '../../models/common/dynamicField';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
-  // Input now expects an array of sections
-  @Input() formConfig: DynamicFieldSection[] = [];
-
   private _initialData: { [key: string]: any } = {};
+  @Input() title: string = '';
+  @Input() formConfig: DynamicFieldSection[] = [];
   @Input() set initialData(data: { [key: string]: any }) {
     this._initialData = data;
-    // Patch the value only if the form has been initialized
     if (this.dynamicForm) {
       this.dynamicForm.patchValue(data);
     }
   }
+
   get initialData(): { [key: string]: any } {
     return this._initialData;
   }

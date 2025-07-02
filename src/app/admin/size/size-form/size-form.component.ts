@@ -6,26 +6,26 @@ import { Size } from 'src/app/shared/models/sizes/size';
 import { SizeService } from 'src/app/shared/services/size-service';
 const sizeFormConfig: DynamicFieldSection[] = [
   {
-    section: 'General', fields: [
+    section: 'GENERAL', fields: [
       {
         type: 'text',
         key: 'name',
-        label: 'Size Name',
+        label: 'SIZE.NAME',
         validators: [Validators.required],
       },
       {
-        type: 'checkbox',
+        type: 'number',
         key: 'sortOrder',
-        label: 'Sort Order',
-        validators: [Validators.required],
+        label: 'SIZE.SORT_ORDER',
+        validators: [Validators.required, Validators.min(0)],
       },
       {
         type: 'select',
         key: 'sizeType',
-        label: 'Size Type',
+        label: 'SIZE.TYPE',
         options: [
-          { value: 'Character', viewValue: 'Character' },
-          { value: 'Number', viewValue: 'Number' },
+          { value: 'Character', viewValue: 'CHARACTER' },
+          { value: 'Number', viewValue: 'NUMBER' },
         ],
         validators: [Validators.required],
       },

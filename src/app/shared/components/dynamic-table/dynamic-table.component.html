@@ -1,11 +1,11 @@
 <mat-card class="dynamic-table-card">
     <mat-card-header>
-        <mat-card-title class="card-title">{{ title }}</mat-card-title>
+        <mat-card-title class="card-title">{{ title | translate }}</mat-card-title>
         <div class="table-actions">
             <button mat-raised-button color="primary" (click)="onAdd()">
-                {{ "ADD" }}
+                {{ "ADD" | translate }}
             </button>
-            <button mat-raised-button color="primary">{{ "DELETE" }}</button>
+            <button mat-raised-button color="primary">{{ "DELETE" | translate }}</button>
 
             <button color="primary" mat-icon-button aria-label="Toggle columns" [matMenuTriggerFor]="columnMenu">
                 <mat-icon>view_column</mat-icon>
@@ -13,7 +13,7 @@
             <mat-menu #columnMenu="matMenu">
                 <button mat-menu-item *ngFor="let col of columns">
                     <mat-checkbox [checked]="col.visible" (change)="toggleColumnVisibility(col.key)">
-                        {{ col.label }}
+                        {{ col.label | translate }}
                     </mat-checkbox>
                 </button>
             </mat-menu>
@@ -52,16 +52,19 @@
                     <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
                         <ng-container *ngIf="column.key !== 'select'">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
-                                {{ column.label }}
+                                {{ column.label | translate }}
                             </th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchDefault>{{ element[column.key] }}</span>
                                     <span *ngSwitchCase="'bool'">
-                                        {{ element[column.key] ? "Yes" : "No" }}
+                                        {{ element[column.key] ? "YES" : "NO" | translate }}
                                     </span>
                                     <span *ngSwitchCase="'date'">{{
                                         element[column.key] | date
+                                        }}</span>
+                                    <span *ngSwitchCase="'options'">{{
+                                        element[column.key] | uppercase | translate
                                         }}</span>
                                 </ng-container>
                             </td>
@@ -76,15 +79,17 @@
                                 <!-- Text -->
                                 <mat-form-field *ngSwitchCase="'text'" appearance="outline">
                                     <input matInput [formControlName]="column.key"
-                                        placeholder="Filter {{ column.label }}" />
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase}}" />
                                 </mat-form-field>
 
                                 <!-- Boolean -->
                                 <mat-form-field *ngSwitchCase="'bool'" appearance="outline">
-                                    <mat-select [formControlName]="column.key">
+                                    <mat-select [formControlName]="column.key"
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase}}"
+                                        panelClass="small-select">
                                         <mat-option [value]="null"></mat-option>
-                                        <mat-option [value]="true">True</mat-option>
-                                        <mat-option [value]="false">False</mat-option>
+                                        <mat-option [value]="true">{{ 'YES' | translate }}</mat-option>
+                                        <mat-option [value]="false">{{ 'NO' | translate }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -93,21 +98,23 @@
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
                         $any(filterForm.get(column.key)?.get('from'))
-                      " placeholder="Min" />
+                      " placeholder="{{ 'FROM' | translate }}" />
                                     </mat-form-field>
                                     <mat-form-field appearance="outline">
                                         <input matInput type="number" [formControl]="
                         $any(filterForm.get(column.key)?.get('to'))
-                      " placeholder="Max" />
+                      " placeholder="{{ 'TO' | translate }}" />
                                     </mat-form-field>
                                 </div>
                                 <!-- Options -->
                                 <mat-form-field *ngSwitchCase="'options'" appearance="outline">
-                                    <mat-select [formControlName]="column.key" panelClass="small-select">
+                                    <mat-select [formControlName]="column.key"
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase }}"
+                                        panelClass="small-select">
                                         <mat-option [value]="null"></mat-option>
                                         <ng-container *ngFor="let option of column.options">
                                             <mat-option [value]="option.value">{{
-                                                option.viewValue
+                                                option.viewValue | translate
                                                 }}</mat-option>
                                         </ng-container>
                                     </mat-select>
@@ -117,8 +124,10 @@
                                     <mat-form-field appearance="outline" [floatLabel]="'always'">
                                         <mat-date-range-input [formGroup]="$any(filterForm.get(column.key))"
                                             [rangePicker]="picker">
-                                            <input matStartDate formControlName="from" placeholder="From" />
-                                            <input matEndDate formControlName="to" placeholder="To" />
+                                            <input matStartDate formControlName="from"
+                                                placeholder="{{ 'FROM' | translate }}" />
+                                            <input matEndDate formControlName="to"
+                                                placeholder="{{ 'TO' | translate }}" />
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-date-range-picker #picker></mat-date-range-picker>
