@@ -30,8 +30,8 @@ const routes: Routes = [
       { path: 'category/create', component: CategoryFormComponent },
       { path: 'category/:id', component: CategoryFormComponent },
       { path: 'size', component: SizeComponent },
-      { path: 'size/edit/:id', component: SizeFormComponent },
-      { path: 'size/add', component: SizeFormComponent },
+      { path: 'edit-size/:id', component: SizeFormComponent },
+      { path: 'edit-size', component: SizeFormComponent },
       // { path: 'size/create', component: CategoryFormComponent },
       // { path: 'size/:id', component: CategoryFormComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

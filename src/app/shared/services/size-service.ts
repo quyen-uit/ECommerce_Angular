@@ -21,8 +21,8 @@ export class SizeService {
         return this.http.post<Size>(`${this.baseUrl}/create`, productBrand);
     }
 
-    delete(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    delete(id: number): Observable<string> {
+        return this.http.delete<string>(`${this.baseUrl}/${id}`);
     }
 
     deleteMany(ids: number[]): Observable<void> {

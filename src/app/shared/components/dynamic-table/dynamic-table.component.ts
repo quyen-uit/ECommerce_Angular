@@ -13,7 +13,6 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Pagination } from '../../models/common/pagination';
-import BaseParams from '../../params/baseParams';
 import { Router } from '@angular/router';
 import { DynamicColumn } from '../../models/common/dynamicColumn';
 import { TranslateService } from '@ngx-translate/core';
@@ -35,6 +34,10 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
       this.dataSource.data = value.data;
       this.paginator.length = value.pageCount;
       this.paginator.pageSize = value.pageSize;
+
+      if (value.data.length == 0 && this.paginator.pageIndex > 0) {
+        this.goFirstPage();
+      }
     }
   }
 
@@ -167,6 +170,11 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
       pageSize: this.paginator?.pageSize ?? 5,
       sort: this.selectedSort,
     });
+  }
+
+  goFirstPage() {
+    this.paginator.pageIndex = 0;
+    this.applyFiltersFromForm();
   }
 
   toggleColumnVisibility(columnKey: string) {

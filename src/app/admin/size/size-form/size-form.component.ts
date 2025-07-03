@@ -67,14 +67,20 @@ export class SizeFormComponent {
   onSubmit(size: Size) {
     size.id = this.id;
     this.api.createOrUpdate(size).subscribe((res) => {
-      this.router.navigate(['/size']);
+      this.router.navigate(['/admin/size']);
     });
   }
 
   onDelete() {
     if (this.id)
-      this.api.delete(this.id).subscribe((res) => {
-        this.router.navigate(['/size']);
+      this.api.delete(this.id).subscribe({
+        next: () => {
+          console.log('Delete successful');
+          this.router.navigate(['/admin/size']);
+        },
+        error: (err) => {
+          console.error('Delete failed', err);
+        }
       });
   }
 }
