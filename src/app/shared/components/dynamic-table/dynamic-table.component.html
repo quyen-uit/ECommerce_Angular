@@ -65,6 +65,9 @@
                                     <span *ngSwitchCase="'date'">{{ element[column.key] | date }}</span>
                                     <span *ngSwitchCase="'options'">{{ element[column.key] | uppercase | translate
                                         }}</span>
+                                    <span *ngSwitchCase="'options'">{{
+                                        element[column.key] | uppercase | translate
+                                        }}</span>
                                 </ng-container>
                             </td>
                         </ng-container>

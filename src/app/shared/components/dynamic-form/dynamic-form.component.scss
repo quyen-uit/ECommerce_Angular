@@ -1,31 +1,35 @@
 mat-card {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 mat-card-header {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 mat-card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 mat-card-subtitle {
-    font-size: 0.9rem;
-    color: #666;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
+}
+
+.form-check {
+  padding-left: 0px !important;
 }
 
 .file-upload {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 button[type="submit"] {
-    min-width: 120px;
+  min-width: 120px;
 }
