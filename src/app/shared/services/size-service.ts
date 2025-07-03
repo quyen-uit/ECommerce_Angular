@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { Pagination } from '../models/common/pagination';
 import { Size } from '../models/sizes/size';
 import { SizePaginationParams } from '../params/sizePaginationParams';
@@ -10,7 +9,7 @@ import { SizePaginationParams } from '../params/sizePaginationParams';
     providedIn: 'root',
 })
 export class SizeService {
-    private baseUrl: string = environment.apiUrl + 'size';
+    private baseUrl: string = 'http://localhost:5229/api/size';
 
     constructor(private http: HttpClient) { }
 
@@ -22,12 +21,17 @@ export class SizeService {
         return this.http.post<Size>(`${this.baseUrl}/create`, productBrand);
     }
 
-
     delete(id: number): Observable<void> {
         return this.http.delete<void>(`${this.baseUrl}/${id}`);
     }
 
-    get(id: string): Observable<Size> {
+    deleteMany(ids: number[]): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/delete-many`, {
+            body: ids,
+        });
+    }
+
+    get(id: number): Observable<Size> {
         return this.http.get<Size>(`${this.baseUrl}/${id}`);
     }
 }

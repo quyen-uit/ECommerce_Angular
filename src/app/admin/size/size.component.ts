@@ -3,6 +3,7 @@ import { DynamicColumn } from 'src/app/shared/models/common/dynamicColumn';
 import { Pagination } from 'src/app/shared/models/common/pagination';
 import { Size } from 'src/app/shared/models/sizes/size';
 import { SizePaginationParams } from 'src/app/shared/params/sizePaginationParams';
+import { Router } from '@angular/router';
 import { SizeService } from 'src/app/shared/services/size-service';
 
 @Component({
@@ -12,10 +13,12 @@ import { SizeService } from 'src/app/shared/services/size-service';
 })
 export class SizeComponent {
   paginationData?: Pagination<Size>;
+  title: string = 'SIZE.MANAGEMENT';
+  editRoute: string = '/admin/edit-size';
   columns: DynamicColumn[] = [
     {
       key: 'name',
-      label: 'Name',
+      label: 'SIZE.NAME',
       type: 'text',
       visible: true,
       sortable: true,
@@ -23,16 +26,19 @@ export class SizeComponent {
     },
     {
       key: 'sizeType',
-      label: 'Type',
+      label: 'SIZE.TYPE',
       type: 'options',
       visible: true,
       sortable: true,
       filterable: true,
-      options: [{ viewValue: 'Character', value: 'Character' }, { viewValue: 'Number', value: 'Number' }]
+      options: [
+        { viewValue: 'CHARACTER', value: 'Character' },
+        { viewValue: 'NUMBER', value: 'Number' },
+      ],
     },
     {
       key: 'sortOrder',
-      label: 'Order',
+      label: 'SIZE.SORT_ORDER',
       type: 'number',
       visible: true,
       sortable: true,
@@ -40,14 +46,19 @@ export class SizeComponent {
     },
   ];
 
-  constructor(private sizeService: SizeService) { }
+  constructor(private sizeService: SizeService, private router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  getAll(params: SizePaginationParams) {
+  onGetAll(params: SizePaginationParams) {
     this.sizeService.getAll(params).subscribe((data) => {
       this.paginationData = data;
+    });
+  }
+
+  onDelete(ids: number[]) {
+    this.sizeService.deleteMany(ids).subscribe((res) => {
+      this.router.navigate([this.router.url]);
     });
   }
 }

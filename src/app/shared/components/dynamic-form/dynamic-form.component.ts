@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicFieldSection } from '../../models/common/dynamicField';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -8,24 +9,29 @@ import { DynamicFieldSection } from '../../models/common/dynamicField';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
-  // Input now expects an array of sections
-  @Input() formConfig: DynamicFieldSection[] = [];
-
   private _initialData: { [key: string]: any } = {};
+  @Input() title: string = '';
+  @Input() editRoute: string = '';
+  @Input() isEditMode: boolean = false;
+  @Input() formConfig: DynamicFieldSection[] = [];
   @Input() set initialData(data: { [key: string]: any }) {
     this._initialData = data;
-    // Patch the value only if the form has been initialized
     if (this.dynamicForm) {
       this.dynamicForm.patchValue(data);
     }
   }
+
   get initialData(): { [key: string]: any } {
     return this._initialData;
   }
 
+  @Output() submit = new EventEmitter<any>();
+  @Output() add = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<any>();
+
   dynamicForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.dynamicForm = this.createFormGroup();
@@ -33,10 +39,14 @@ export class DynamicFormComponent implements OnInit {
 
   private createFormGroup(): FormGroup {
     const group: { [key: string]: any } = {};
-    this.formConfig.forEach(section => {
+    this.formConfig.forEach((section) => {
       section.fields.forEach((field) => {
-        const value = this._initialData[field.key] ?? field.value ?? '';
-        group[field.key] = [value, field.validators || []];
+        const value = this._initialData[field.key] ?? field.value ?? undefined;
+        const disabled = field.editable === false;
+        group[field.key] = [
+          { value: value, disabled: disabled },
+          field.validators || [],
+        ];
       });
     });
     return this.fb.group(group);
@@ -51,7 +61,15 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dynamicForm.valid) {
-      console.log('Form Submitted!', this.dynamicForm.value);
+      this.submit.emit(this.dynamicForm.value);
     }
+  }
+
+  onDelete() {
+    this.delete.emit();
+  }
+
+  onAdd() {
+    this.router.navigate([this.editRoute]);
   }
 }

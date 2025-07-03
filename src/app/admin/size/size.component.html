@@ -1,3 +1,3 @@
-<app-dynamic-table [columns]="columns" [pagination]="paginationData" (getAll)="getAll($event)"
-    [addRoute]="'/admin/size/add'" [editRoute]="'/admin/size/edit'">
+<app-dynamic-table [columns]="columns" [pagination]="paginationData" (getAll)="onGetAll($event)"
+    (delete)="onDelete($event)" [editRoute]="editRoute" [title]="title">
 </app-dynamic-table>

@@ -1,103 +1,42 @@
- .card-title {
-   font-size: 28px;
-   font-weight: bold;
-   color: #333;
-   text-transform: uppercase;
- }
+.card-title {
+  font-size: 28px;
+  color: #333;
+}
 
+.table-container {
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 32px !important;
+  }
 
- button[mat-raised-button] {
-   margin-right: 8px;
- }
+  ::ng-deep .mat-mdc-form-field-flex {
+    margin-top: -11px !important;
+  }
 
- mat-paginator {
-   margin-top: 16px;
-   background-color: white;
-   border-radius: 0 0 8px 8px;
-   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
- }
+  ::ng-deep mat-form-field {
+    height: 32px;
+  }
 
- mat-menu-item {
-   padding: 0 16px;
- }
+  ::ng-deep .mat-mdc-form-field-icon-suffix {
+    padding: 0px !important;
+  }
 
- mat-card-header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   margin-bottom: 8px;
- }
+  mat-form-field,
+  mat-select,
+  mat-checkbox,
+  mat-option {
+    font-size: 12px !important;
+  }
+}
 
- .table-actions {
-   align-items: center;
-   justify-content: center;
-   display: flex;
- }
+.range-filter {
+  width: 212px;
+}
 
- .table-container {
-   ::ng-deep .mat-mdc-text-field-wrapper {
-     height: 32px !important;
-   }
+::ng-deep .small-select mat-option {
+  font-size: 12px;
+}
 
-   ::ng-deep .mat-mdc-form-field-flex {
-     margin-top: -11px !important;
-   }
-
-   ::ng-deep mat-form-field {
-     height: 32px;
-   }
-
-   .mat-mdc-form-field-icon-suffix {
-     padding: 0px !important;
-   }
-
-   mat-form-field,
-   mat-select,
-   mat-checkbox,
-   mat-option {
-     font-size: 12px !important;
-   }
-
-   .mat-row:hover {
-     background-color: #f9f9f9;
-   }
-
-   .table-container {
-     overflow: auto;
-   }
-
-   .dynamic-table {
-     background-color: white;
-     border-radius: 8px;
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-   }
-
-   .table-header {
-     font-weight: 600;
-     background-color: #dadada !important;
-     color: #333;
-   }
-
-   .mat-cell {
-     color: #444;
-     border-bottom: 1px solid #eee;
-   }
-
-
-   .range-filter {
-     display: flex;
-     gap: 8px;
-     align-items: center;
-     width: 212px;
-   }
-
- }
-
- ::ng-deep .small-select mat-option {
-   font-size: 12px;
- }
-
- ::ng-deep .mat-mdc-table .mat-mdc-row:hover {
-   background-color: rgba(0, 0, 0, 0.04); // light gray
-   cursor: pointer;
- }
+::ng-deep .mat-mdc-table .mat-mdc-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}

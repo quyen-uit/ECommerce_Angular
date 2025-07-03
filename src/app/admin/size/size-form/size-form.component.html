@@ -1,1 +1,2 @@
-<app-dynamic-form [initialData]="size" [formConfig]="sizeFormConfig"></app-dynamic-form>
+<app-dynamic-form [initialData]="size" [formConfig]="sizeFormConfig" [title]="title" (submit)="onSubmit($event)"
+    (delete)="onDelete()" [isEditMode]="isEditMode" [editRoute]="editRoute"></app-dynamic-form>

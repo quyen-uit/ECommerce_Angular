@@ -9,33 +9,32 @@ import {
 } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Pagination } from '../../models/common/pagination';
 import BaseParams from '../../params/baseParams';
 import { Router } from '@angular/router';
 import { DynamicColumn } from '../../models/common/dynamicColumn';
-
+import { TranslateService } from '@ngx-translate/core';
+import { toSnakeCase } from '../../helpers/string.helper';
 @Component({
   selector: 'app-dynamic-table',
   templateUrl: './dynamic-table.component.html',
   styleUrls: ['./dynamic-table.component.scss'],
 })
 export class DynamicTableComponent implements OnInit, AfterViewInit {
+  private _pagination!: Pagination<any>;
   @Input() columns: DynamicColumn[] = [];
   @Input() title: string = '';
   @Input() editRoute: string = '';
-  @Input() addRoute: string = '';
-
-  private _pagination!: Pagination<any>;
-
   @Input()
   set pagination(value: Pagination<any> | undefined) {
     if (value) {
       this._pagination = value;
       this.dataSource.data = value.data;
       this.paginator.length = value.pageCount;
+      this.paginator.pageSize = value.pageSize;
     }
   }
 
@@ -43,29 +42,59 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
     return this._pagination;
   }
 
+  get selectedIds(): number[] {
+    return this.selection.selected.map((item) => item.id);
+  }
+
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() getAll = new EventEmitter<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   dataSource = new MatTableDataSource<any>();
   filterForm!: FormGroup;
   selection = new SelectionModel<any>(true, []);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  constructor(private router: Router) { }
+  selectedSort: string = '';
+
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+    private paginatorIntl: MatPaginatorIntl
+  ) { }
+
   ngOnInit() {
     this.initFilterForm();
+    this.applyFiltersFromForm();
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.applyFiltersFromForm();
-
+    this.updatePaginatorTranslation();
     this.paginator.page.subscribe(() => {
       this.applyFiltersFromForm();
     });
+  }
+
+  updatePaginatorTranslation() {
+    this.translate
+      .get([
+        'ITEMS_PER_PAGE',
+        'NEXT_PAGE',
+        'PREVIOUS_PAGE',
+        'FIRST_PAGE',
+        'LAST_PAGE',
+      ])
+      .subscribe((translations) => {
+        this.paginator._intl.itemsPerPageLabel = translations['ITEMS_PER_PAGE'];
+        this.paginatorIntl.nextPageLabel = translations['NEXT_PAGE'];
+        this.paginatorIntl.previousPageLabel = translations['PREVIOUS_PAGE'];
+        this.paginatorIntl.firstPageLabel = translations['FIRST_PAGE'];
+        this.paginatorIntl.lastPageLabel = translations['LAST_PAGE'];
+        this.paginatorIntl.changes.next();
+      });
   }
 
   get visibleColumns() {
@@ -134,9 +163,9 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
     // Emit filter and pagination info
     this.getAll.emit({
       filter: combinedFilters,
-      pageNumber:
-        this.paginator?.pageIndex === 0 ? 1 : this.paginator?.pageIndex,
+      pageNumber: this.paginator ? this.paginator?.pageIndex + 1 : 1,
       pageSize: this.paginator?.pageSize ?? 5,
+      sort: this.selectedSort,
     });
   }
 
@@ -165,14 +194,19 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
     this.edit.emit(row);
   }
 
-  onDelete(row: any) {
-    this.delete.emit(row);
+  onDelete() {
+    this.delete.emit(this.selectedIds);
   }
 
   onAdd() {
-    if (this.addRoute) this.router.navigate([this.addRoute]);
+    this.router.navigate([this.editRoute]);
   }
   onRowDoubleClick(row: any) {
-    if (this.editRoute) this.router.navigate([this.editRoute, row.id]);
+    this.router.navigate([this.editRoute, row.id]);
+  }
+
+  onSort(sort: Sort) {
+    this.selectedSort = toSnakeCase(`${sort.active}_${sort.direction}`);
+    this.applyFiltersFromForm();
   }
 }

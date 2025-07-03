@@ -1,32 +1,36 @@
 <mat-card class="dynamic-table-card">
-    <mat-card-header>
-        <mat-card-title class="card-title">{{ title }}</mat-card-title>
-        <div class="table-actions">
-            <button mat-raised-button color="primary" (click)="onAdd()">
-                {{ "ADD" }}
+    <mat-card-header class="d-flex justify-content-between align-items-center mb-2">
+        <mat-card-title class="card-title text-uppercase fw-bold">{{ title | translate }}</mat-card-title>
+        <div class="table-actions d-flex align-items-center justify-content-center">
+            <button mat-raised-button color="primary" class="me-2" (click)="onAdd()">
+                {{ "ADD" | translate }}
             </button>
-            <button mat-raised-button color="primary">{{ "DELETE" }}</button>
-
+            <button mat-raised-button color="primary" class="me-2" (click)="onDelete()">
+                {{ "DELETE" | translate }}
+            </button>
             <button color="primary" mat-icon-button aria-label="Toggle columns" [matMenuTriggerFor]="columnMenu">
                 <mat-icon>view_column</mat-icon>
             </button>
             <mat-menu #columnMenu="matMenu">
-                <button mat-menu-item *ngFor="let col of columns">
+                <button mat-menu-item *ngFor="let col of columns" class="px-3">
                     <mat-checkbox [checked]="col.visible" (change)="toggleColumnVisibility(col.key)">
-                        {{ col.label }}
+                        {{ col.label | translate }}
                     </mat-checkbox>
                 </button>
             </mat-menu>
         </div>
     </mat-card-header>
+
     <mat-card-content>
-        <div class="table-container">
+        <div class="table-container overflow-auto">
             <form [formGroup]="filterForm" (keydown.enter)="applyFiltersFromForm()">
-                <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 dynamic-table">
-                    <!-- None Column Header-->
+                <table mat-table [dataSource]="dataSource" matSort
+                    class="mat-elevation-z8 dynamic-table shadow-sm rounded" (matSortChange)="onSort($event)">
+
                     <ng-container matColumnDef="none">
                         <th mat-header-cell *matHeaderCellDef></th>
                     </ng-container>
+
                     <ng-container matColumnDef="search">
                         <th mat-header-cell *matHeaderCellDef>
                             <button color="primary" (click)="applyFiltersFromForm()" mat-icon-button
@@ -36,9 +40,8 @@
                         </th>
                     </ng-container>
 
-                    <!-- Selection Column -->
                     <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef class="table-header">
+                        <th mat-header-cell *matHeaderCellDef class="table-header bg-light text-dark fw-semibold">
                             <mat-checkbox (change)="toggleAllRows($event)" [checked]="isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
                         </th>
@@ -48,77 +51,73 @@
                         </td>
                     </ng-container>
 
-                    <!-- Data Columns -->
                     <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
                         <ng-container *ngIf="column.key !== 'select'">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
-                                {{ column.label }}
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                class="table-header bg-light text-dark fw-semibold">
+                                {{ column.label | translate }}
                             </th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchDefault>{{ element[column.key] }}</span>
-                                    <span *ngSwitchCase="'bool'">
-                                        {{ element[column.key] ? "Yes" : "No" }}
-                                    </span>
-                                    <span *ngSwitchCase="'date'">{{
-                                        element[column.key] | date
+                                    <span *ngSwitchCase="'bool'">{{ element[column.key] ? "YES" : ("NO" | translate)
+                                        }}</span>
+                                    <span *ngSwitchCase="'date'">{{ element[column.key] | date }}</span>
+                                    <span *ngSwitchCase="'options'">{{ element[column.key] | uppercase | translate
                                         }}</span>
                                 </ng-container>
                             </td>
                         </ng-container>
                     </ng-container>
 
-                    <!-- Filter Row -->
                     <ng-container *ngFor="let column of columns" [matColumnDef]="column.key + '_filter'">
                         <th mat-header-cell *matHeaderCellDef>
                             <ng-container [ngSwitch]="column.type">
                                 <div *ngSwitchCase="'none'"></div>
-                                <!-- Text -->
                                 <mat-form-field *ngSwitchCase="'text'" appearance="outline">
                                     <input matInput [formControlName]="column.key"
-                                        placeholder="Filter {{ column.label }}" />
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase }}" />
                                 </mat-form-field>
-
-                                <!-- Boolean -->
                                 <mat-form-field *ngSwitchCase="'bool'" appearance="outline">
-                                    <mat-select [formControlName]="column.key">
+                                    <mat-select [formControlName]="column.key"
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase }}"
+                                        panelClass="small-select">
                                         <mat-option [value]="null"></mat-option>
-                                        <mat-option [value]="true">True</mat-option>
-                                        <mat-option [value]="false">False</mat-option>
+                                        <mat-option [value]="true">{{ "YES" | translate }}</mat-option>
+                                        <mat-option [value]="false">{{ "NO" | translate }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-
-                                <!-- Number -->
-                                <div *ngSwitchCase="'number'" class="range-filter">
+                                <div *ngSwitchCase="'number'" class="range-filter d-flex align-items-center gap-2">
                                     <mat-form-field appearance="outline">
-                                        <input matInput type="number" [formControl]="
-                        $any(filterForm.get(column.key)?.get('from'))
-                      " placeholder="Min" />
+                                        <input matInput type="number"
+                                            [formControl]="$any(filterForm.get(column.key)?.get('from'))"
+                                            placeholder="{{ 'FROM' | translate }}" />
                                     </mat-form-field>
                                     <mat-form-field appearance="outline">
-                                        <input matInput type="number" [formControl]="
-                        $any(filterForm.get(column.key)?.get('to'))
-                      " placeholder="Max" />
+                                        <input matInput type="number"
+                                            [formControl]="$any(filterForm.get(column.key)?.get('to'))"
+                                            placeholder="{{ 'TO' | translate }}" />
                                     </mat-form-field>
                                 </div>
-                                <!-- Options -->
                                 <mat-form-field *ngSwitchCase="'options'" appearance="outline">
-                                    <mat-select [formControlName]="column.key" panelClass="small-select">
+                                    <mat-select [formControlName]="column.key"
+                                        placeholder="{{ 'FILTER' | translate }} {{ column.label | translate | lowercase }}"
+                                        panelClass="small-select">
                                         <mat-option [value]="null"></mat-option>
                                         <ng-container *ngFor="let option of column.options">
-                                            <mat-option [value]="option.value">{{
-                                                option.viewValue
+                                            <mat-option [value]="option.value">{{ option.viewValue | translate
                                                 }}</mat-option>
                                         </ng-container>
                                     </mat-select>
                                 </mat-form-field>
-                                <!-- Date -->
-                                <div *ngSwitchCase="'date'" class="range-filter">
+                                <div *ngSwitchCase="'date'" class="range-filter d-flex align-items-center gap-2">
                                     <mat-form-field appearance="outline" [floatLabel]="'always'">
                                         <mat-date-range-input [formGroup]="$any(filterForm.get(column.key))"
                                             [rangePicker]="picker">
-                                            <input matStartDate formControlName="from" placeholder="From" />
-                                            <input matEndDate formControlName="to" placeholder="To" />
+                                            <input matStartDate formControlName="from"
+                                                placeholder="{{ 'FROM' | translate }}" />
+                                            <input matEndDate formControlName="to"
+                                                placeholder="{{ 'TO' | translate }}" />
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-date-range-picker #picker></mat-date-range-picker>
@@ -128,13 +127,13 @@
                         </th>
                     </ng-container>
 
-                    <!-- Header and Data Rows -->
                     <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
                     <tr mat-header-row *matHeaderRowDef="visibleFilterColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: visibleColumns" (dblclick)="onRowDoubleClick(row)"></tr>
                 </table>
             </form>
         </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+        <mat-paginator class="mt-3 bg-white rounded-bottom" [pageSizeOptions]="[5, 10, 25]"
+            showFirstLastButtons></mat-paginator>
     </mat-card-content>
 </mat-card>

@@ -1,37 +1,9 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { DynamicField, DynamicFieldSection } from 'src/app/shared/models/common/dynamicField';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DynamicFieldSection } from 'src/app/shared/models/common/dynamicField';
 import { Size } from 'src/app/shared/models/sizes/size';
 import { SizeService } from 'src/app/shared/services/size-service';
-const sizeFormConfig: DynamicFieldSection[] = [
-  {
-    section: 'General', fields: [
-      {
-        type: 'text',
-        key: 'name',
-        label: 'Size Name',
-        validators: [Validators.required],
-      },
-      {
-        type: 'checkbox',
-        key: 'sortOrder',
-        label: 'Sort Order',
-        validators: [Validators.required],
-      },
-      {
-        type: 'select',
-        key: 'sizeType',
-        label: 'Size Type',
-        options: [
-          { value: 'Character', viewValue: 'Character' },
-          { value: 'Number', viewValue: 'Number' },
-        ],
-        validators: [Validators.required],
-      },
-    ]
-  }
-];
 
 @Component({
   selector: 'app-size-form',
@@ -39,22 +11,70 @@ const sizeFormConfig: DynamicFieldSection[] = [
   styleUrls: ['./size-form.component.scss'],
 })
 export class SizeFormComponent {
-  sizeFormConfig = sizeFormConfig;
+  sizeFormConfig: DynamicFieldSection[] = [
+    {
+      section: 'GENERAL',
+      fields: [
+        {
+          type: 'text',
+          key: 'name',
+          label: 'SIZE.NAME',
+          validators: [Validators.required],
+        },
+        {
+          type: 'number',
+          key: 'sortOrder',
+          label: 'SIZE.SORT_ORDER',
+          validators: [Validators.required, Validators.min(0)],
+        },
+        {
+          type: 'select',
+          key: 'sizeType',
+          label: 'SIZE.TYPE',
+          options: [
+            { value: 'Character', viewValue: 'CHARACTER' },
+            { value: 'Number', viewValue: 'NUMBER' },
+          ],
+          validators: [Validators.required],
+        },
+      ],
+    },
+  ];
+  title = 'SIZE.ADD';
+  editRoute: string = '/admin/edit-size';
   isEditMode = false;
-  id!: string;
-  size!: Size;
-
-  constructor(private route: ActivatedRoute, private api: SizeService) { }
+  id?: number;
+  size = new Size();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private api: SizeService
+  ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id')!;
-    this.isEditMode = !!this.id;
-    this.size = new Size();
-    if (this.isEditMode) {
+    let idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.id = +idParam;
+      this.isEditMode = true;
+      this.title = 'SIZE.EDIT';
       // Load data by ID and patch the form
       this.api.get(this.id).subscribe((res) => {
         this.size = res;
       });
     }
+  }
+
+  onSubmit(size: Size) {
+    size.id = this.id;
+    this.api.createOrUpdate(size).subscribe((res) => {
+      this.router.navigate(['/size']);
+    });
+  }
+
+  onDelete() {
+    if (this.id)
+      this.api.delete(this.id).subscribe((res) => {
+        this.router.navigate(['/size']);
+      });
   }
 }
