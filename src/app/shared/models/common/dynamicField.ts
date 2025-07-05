@@ -1,7 +1,7 @@
 import { ValidatorFn } from '@angular/forms';
 
 export interface DynamicField {
-    type: 'text' | 'email' | 'phone' | 'number' | 'select' | 'date' | 'datetime' | 'checkbox' | 'file';
+    type: 'text' | 'email' | 'phone' | 'number' | 'select' | 'date' | 'datetime' | 'checkbox' | 'file' | 'text-editor';
     key: string;
     label: string;
     value?: any;

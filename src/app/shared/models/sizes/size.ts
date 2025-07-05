@@ -6,5 +6,5 @@ export class CreateSize {
 }
 
 export class Size extends CreateSize {
- 
+    override id: number = 0;
 }

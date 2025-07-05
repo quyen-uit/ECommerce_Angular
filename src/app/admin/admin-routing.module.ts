@@ -12,6 +12,9 @@ import { ColorFormComponent } from './color/color-form/color-form.component';
 import { ProductBrandFormComponent } from './product-brand/product-brand-form/product-brand-form.component';
 import { SizeComponent } from './size/size.component';
 import { SizeFormComponent } from './size/size-form/size-form.component';
+import { Brand } from '../shared/models/brands/brand';
+import { BrandComponent } from './brand/brand.component';
+import { BrandFormComponent } from './brand/brand-form/brand-form.component';
 
 const routes: Routes = [
   {
@@ -20,18 +23,18 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'product', component: ProductComponent },
-      { path: 'brand', component: ProductBrandComponent },
-      { path: 'brand/create', component: ProductBrandFormComponent },
-      { path: 'brand/:id', component: ProductBrandFormComponent },
+      { path: 'brands', component: BrandComponent },
+      { path: 'brand', component: BrandFormComponent },
+      { path: 'brand/:id', component: BrandFormComponent },
       { path: 'color', component: ColorComponent },
       { path: 'color/create', component: ColorFormComponent },
       { path: 'color/:id', component: ColorFormComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'category/create', component: CategoryFormComponent },
       { path: 'category/:id', component: CategoryFormComponent },
-      { path: 'size', component: SizeComponent },
-      { path: 'edit-size/:id', component: SizeFormComponent },
-      { path: 'edit-size', component: SizeFormComponent },
+      { path: 'sizes', component: SizeComponent },
+      { path: 'size/:id', component: SizeFormComponent },
+      { path: 'size', component: SizeFormComponent },
       // { path: 'size/create', component: CategoryFormComponent },
       // { path: 'size/:id', component: CategoryFormComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

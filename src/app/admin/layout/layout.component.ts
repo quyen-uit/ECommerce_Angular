@@ -17,8 +17,9 @@ export class AdminLayoutComponent {
     { name: 'Dashboard', icon: 'dashboard', route: 'dashboard' },
     { name: 'Category', icon: 'category', route: 'category' },
     { name: 'Product', icon: 'backpack', route: 'product' },
-    { name: 'Product Brand', icon: 'business', route: 'brand' },
+    { name: 'Product Brand', icon: 'business', route: 'brands' },
     { name: 'Color', icon: 'palette', route: 'color' },
+    { name: 'Size', icon: 'straighten', route: 'sizes' },
   ]
   constructor(private breakpointObserver: BreakpointObserver) { }
 

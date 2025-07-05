@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { DynamicFieldSection } from 'src/app/shared/models/common/dynamicField';
-import { Size } from 'src/app/shared/models/sizes/size';
+import { CreateSize, Size } from 'src/app/shared/models/sizes/size';
 import { SizeService } from 'src/app/shared/services/size-service';
 
 @Component({
@@ -41,14 +43,16 @@ export class SizeFormComponent {
     },
   ];
   title = 'SIZE.ADD';
-  editRoute: string = '/admin/edit-size';
+  editRoute: string = '/admin/size';
   isEditMode = false;
   id?: number;
   size = new Size();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private sizeService: SizeService
+    private sizeService: SizeService,
+    private toast: ToastrService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -64,10 +68,17 @@ export class SizeFormComponent {
     }
   }
 
-  onSubmit(size: Size) {
+  onSubmit(size: CreateSize) {
     size.id = this.id;
     this.sizeService.createOrUpdate(size).subscribe((res) => {
-      this.router.navigate(['/admin/size']);
+      this.navigateToList();
+      this.translate.get(['SIZE.UPDATE_SUCCESS', 'SIZE.CREATE_SUCCESS']).subscribe((res: string[]) => {
+        if (this.isEditMode) {
+          this.toast.success(res[0]); // SIZE.UPDATE_SUCCESS
+        } else {
+          this.toast.success(res[1]); // SIZE.CREATE_SUCCESS
+        }
+      });
     });
   }
 
@@ -75,12 +86,18 @@ export class SizeFormComponent {
     if (this.id)
       this.sizeService.delete(this.id).subscribe({
         next: () => {
-          console.log('Delete successful');
-          this.router.navigate(['/admin/size']);
+          this.translate.get('SIZE.DELETE_SUCCESS').subscribe((res: string) => {
+            this.toast.success(res);
+          });
+          this.navigateToList();
         },
         error: (err) => {
           console.error('Delete failed', err);
         }
       });
+  }
+
+  navigateToList() {
+    this.router.navigate(['/admin/sizes']);
   }
 }

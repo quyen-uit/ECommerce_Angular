@@ -6,6 +6,8 @@ import { SizePaginationParams } from 'src/app/shared/params/sizePaginationParams
 import { Router } from '@angular/router';
 import { DynamicTableComponent } from 'src/app/shared/components/dynamic-table/dynamic-table.component';
 import { SizeService } from 'src/app/shared/services/size-service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-size',
@@ -15,7 +17,7 @@ import { SizeService } from 'src/app/shared/services/size-service';
 export class SizeComponent {
   paginationData?: Pagination<Size>;
   title: string = 'SIZE.MANAGEMENT';
-  editRoute: string = '/admin/edit-size';
+  editRoute: string = '/admin/size';
   columns: DynamicColumn[] = [
     {
       key: 'name',
@@ -48,7 +50,7 @@ export class SizeComponent {
   ];
 
   @ViewChild('dynamicTable') dynamicTable!: DynamicTableComponent;
-  constructor(private sizeService: SizeService, private router: Router) { }
+  constructor(private sizeService: SizeService, private router: Router, private toast: ToastrService, private translate: TranslateService) { }
 
   ngOnInit() { }
 
@@ -61,6 +63,10 @@ export class SizeComponent {
   onDelete(ids: number[]) {
     this.sizeService.deleteMany(ids).subscribe((res) => {
       this.dynamicTable.applyFiltersFromForm();
+      this.translate.get('SIZE.DELETE_SUCCESS').subscribe((res: string) => {
+        this.toast.success(res);
+      });
+
     });
   }
 }

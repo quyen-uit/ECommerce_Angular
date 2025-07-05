@@ -4,7 +4,7 @@ import { Pagination } from '../../shared/models/pagination';
 import { Product } from '../../shared/models/product';
 import { Observable, map, of } from 'rxjs';
 import { Type } from 'src/app/shared/models/type';
-import { Brand } from 'src/app/shared/models/brand';
+import { Brand } from 'src/app/shared/models/brands/brand';
 import { environment } from 'src/environments/environment.development';
 import { ProductParams } from 'src/app/shared/params/productParams';
 

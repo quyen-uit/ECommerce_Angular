@@ -126,7 +126,12 @@
         "TITLE": "Thương hiệu",
         "NAME": "Tên thương hiệu",
         "ADD_BRAND": "Thêm thương hiệu mới",
-        "DELETE_SUCCESS": "Xóa thương hiệu thành công!"
+        "DELETE_SUCCESS": "Xóa thương hiệu thành công!",
+        "MANAGEMENT": "Quản lý thương hiệu",
+        "ADD": "Thêm mới thương hiệu",
+        "UPDATE_SUCCESS": "Cập nhật thương hiệu thành công!",
+        "CREATE_SUCCESS": "Tạo thương hiệu thành công!",
+        "DESCRIPTION":"Mô tả"
     },
     "SIZE": {
         "TITLE": "Kích cỡ",
@@ -136,7 +141,9 @@
         "ADD_SIZE": "Thêm kích cỡ mới",
         "DELETE_SUCCESS": "Xóa kích cỡ thành công!",
         "MANAGEMENT": "Quản lý kích cỡ",
-        "ADD":"Thêm mới kích cỡ"
+        "ADD":"Thêm mới kích cỡ",
+        "UPDATE_SUCCESS": "Cập nhật kích cỡ thành công!",
+        "CREATE_SUCCESS": "Tạo kích cỡ thành công!"
     },
     "COLOR": {
         "TITLE": "Màu sắc",

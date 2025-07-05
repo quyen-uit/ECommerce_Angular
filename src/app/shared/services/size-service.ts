@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pagination } from '../models/common/pagination';
-import { Size } from '../models/sizes/size';
+import { CreateSize, Size } from '../models/sizes/size';
 import { SizePaginationParams } from '../params/sizePaginationParams';
 import { environment } from 'src/environments/environment.development';
 
@@ -18,7 +18,7 @@ export class SizeService {
         return this.http.post<Pagination<Size>>(`${this.baseUrl}/get-all`, params);
     }
 
-    createOrUpdate(productBrand: Size): Observable<Size> {
+    createOrUpdate(productBrand: CreateSize): Observable<Size> {
         return this.http.post<Size>(`${this.baseUrl}/create`, productBrand);
     }
 
