@@ -14,7 +14,7 @@
     </mat-card-header>
 
     <mat-card-content>
-        <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit($event)">
             <mat-accordion multi>
                 <ng-container *ngFor="let section of formConfig">
                     <mat-expansion-panel [expanded]="true">

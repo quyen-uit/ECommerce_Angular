@@ -48,7 +48,7 @@ export class SizeFormComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private api: SizeService
+    private sizeService: SizeService
   ) { }
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class SizeFormComponent {
       this.isEditMode = true;
       this.title = 'SIZE.EDIT';
       // Load data by ID and patch the form
-      this.api.get(this.id).subscribe((res) => {
+      this.sizeService.get(this.id).subscribe((res) => {
         this.size = res;
       });
     }
@@ -66,14 +66,14 @@ export class SizeFormComponent {
 
   onSubmit(size: Size) {
     size.id = this.id;
-    this.api.createOrUpdate(size).subscribe((res) => {
+    this.sizeService.createOrUpdate(size).subscribe((res) => {
       this.router.navigate(['/admin/size']);
     });
   }
 
   onDelete() {
     if (this.id)
-      this.api.delete(this.id).subscribe({
+      this.sizeService.delete(this.id).subscribe({
         next: () => {
           console.log('Delete successful');
           this.router.navigate(['/admin/size']);

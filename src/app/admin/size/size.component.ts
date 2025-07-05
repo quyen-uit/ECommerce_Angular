@@ -4,6 +4,7 @@ import { Pagination } from 'src/app/shared/models/common/pagination';
 import { Size } from 'src/app/shared/models/sizes/size';
 import { SizePaginationParams } from 'src/app/shared/params/sizePaginationParams';
 import { Router } from '@angular/router';
+import { DynamicTableComponent } from 'src/app/shared/components/dynamic-table/dynamic-table.component';
 import { SizeService } from 'src/app/shared/services/size-service';
 
 @Component({
@@ -40,12 +41,13 @@ export class SizeComponent {
       key: 'sortOrder',
       label: 'SIZE.SORT_ORDER',
       type: 'number',
-      visible: true,
+      visible: false,
       sortable: true,
       filterable: true,
     },
   ];
 
+  @ViewChild('dynamicTable') dynamicTable!: DynamicTableComponent;
   constructor(private sizeService: SizeService, private router: Router) { }
 
   ngOnInit() { }
@@ -58,7 +60,7 @@ export class SizeComponent {
 
   onDelete(ids: number[]) {
     this.sizeService.deleteMany(ids).subscribe((res) => {
-      this.router.navigate([this.router.url]);
+      this.dynamicTable.applyFiltersFromForm();
     });
   }
 }

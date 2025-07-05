@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Pagination } from '../models/common/pagination';
 import { Size } from '../models/sizes/size';
 import { SizePaginationParams } from '../params/sizePaginationParams';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SizeService {
-    private baseUrl: string = 'http://localhost:5229/api/size';
+    private baseUrl: string = environment.apiUrl + 'size';
 
     constructor(private http: HttpClient) { }
 

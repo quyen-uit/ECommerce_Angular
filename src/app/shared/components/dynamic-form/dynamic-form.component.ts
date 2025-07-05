@@ -59,7 +59,8 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit(event: Event): void {
+    event.stopPropagation(); // receive default propagated event if output has naming submit
     if (this.dynamicForm.valid) {
       this.submit.emit(this.dynamicForm.value);
     }

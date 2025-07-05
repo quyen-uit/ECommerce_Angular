@@ -64,8 +64,7 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private translate: TranslateService,
-    private paginatorIntl: MatPaginatorIntl
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -92,11 +91,10 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
       ])
       .subscribe((translations) => {
         this.paginator._intl.itemsPerPageLabel = translations['ITEMS_PER_PAGE'];
-        this.paginatorIntl.nextPageLabel = translations['NEXT_PAGE'];
-        this.paginatorIntl.previousPageLabel = translations['PREVIOUS_PAGE'];
-        this.paginatorIntl.firstPageLabel = translations['FIRST_PAGE'];
-        this.paginatorIntl.lastPageLabel = translations['LAST_PAGE'];
-        this.paginatorIntl.changes.next();
+        this.paginator._intl.nextPageLabel = translations['NEXT_PAGE'];
+        this.paginator._intl.previousPageLabel = translations['PREVIOUS_PAGE'];
+        this.paginator._intl.firstPageLabel = translations['FIRST_PAGE'];
+        this.paginator._intl.lastPageLabel = translations['LAST_PAGE'];
       });
   }
 
@@ -205,16 +203,21 @@ export class DynamicTableComponent implements OnInit, AfterViewInit {
   onDelete() {
     this.delete.emit(this.selectedIds);
   }
-
   onAdd() {
-    this.router.navigate([this.editRoute]);
+    this.openDetailTab();
   }
   onRowDoubleClick(row: any) {
-    this.router.navigate([this.editRoute, row.id]);
+    this.openDetailTab(row.id);
   }
 
   onSort(sort: Sort) {
     this.selectedSort = toSnakeCase(`${sort.active}_${sort.direction}`);
     this.applyFiltersFromForm();
+  }
+
+  openDetailTab(id?: number) {
+    const commands = id ? [this.editRoute, id] : [this.editRoute];
+    const url = this.router.serializeUrl(this.router.createUrlTree(commands));
+    window.open(url, '_blank');
   }
 }

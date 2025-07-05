@@ -50,6 +50,12 @@
     "GENERAL": "Chung",
     "ERROR": "Lỗi",
     "ITEMS_PER_PAGE": "Mục trên mỗi trang",
+    "PREVIOUS_PAGE": "Trang trước",
+    "NEXT_PAGE": "Trang sau",
+    "FIRST_PAGE": "Trang đầu tiên",
+    "LAST_PAGE": "Trang cuối cùng",
+    "SEARCH_RESULTS": "Kết quả tìm kiếm",
+    "NO_RESULT": "Không có kểt quả",
     "VALIDATION": {
         "REQUIRED": "Trường này là bắt buộc.",
         "INVALID_EMAIL": "Địa chỉ email không hợp lệ.",
@@ -129,7 +135,8 @@
         "SORT_ORDER": "Thứ tự sắp xếp",
         "ADD_SIZE": "Thêm kích cỡ mới",
         "DELETE_SUCCESS": "Xóa kích cỡ thành công!",
-        "MANAGEMENT": "Quản lý kích cỡ"
+        "MANAGEMENT": "Quản lý kích cỡ",
+        "ADD":"Thêm mới kích cỡ"
     },
     "COLOR": {
         "TITLE": "Màu sắc",
