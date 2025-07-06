@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DynamicFieldSection } from '../../models/common/dynamicField';
+import { DynamicField, DynamicFieldSection } from '../../models/common/dynamicField';
 import { Router } from '@angular/router';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -30,11 +31,29 @@ export class DynamicFormComponent implements OnInit {
   @Output() delete = new EventEmitter<any>();
 
   dynamicForm!: FormGroup;
-
+  editors: { [key: string]: Editor } = {};
+  html: string = '';
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
   constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.dynamicForm = this.createFormGroup();
+  }
+
+  ngOnDestroy(): void {
+    const keys = Object.keys(this.editors);
+    keys.forEach(key => {
+      this.editors[key].destroy();
+    });
   }
 
   private createFormGroup(): FormGroup {
@@ -47,6 +66,11 @@ export class DynamicFormComponent implements OnInit {
           { value: value, disabled: disabled },
           field.validators || [],
         ];
+        if (field.type === 'text-editor') {
+          const editor = new Editor();
+          this.editors[field.key] = editor;
+        }
+
       });
     });
     return this.fb.group(group);
@@ -72,5 +96,9 @@ export class DynamicFormComponent implements OnInit {
 
   onAdd() {
     this.router.navigate([this.editRoute]);
+  }
+
+  getFieldsByType(fields: DynamicField[], type: string): DynamicField[] {
+    return fields.filter((field) => field.type === type);
   }
 }

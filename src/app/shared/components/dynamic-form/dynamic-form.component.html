@@ -19,37 +19,25 @@
                 <ng-container *ngFor="let section of formConfig">
                     <mat-expansion-panel [expanded]="true">
                         <mat-expansion-panel-header>
-                            <mat-panel-title>
+                            <mat-panel-title class="font-weight-bold h5">
                                 {{ section.section | translate }}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <div class="d-flex flex-wrap pt-3">
-                            <ng-container *ngFor="let field of section.fields">
-                                <ng-container *ngIf="field.type === 'checkbox'">
-                                    <div class="me-4 mb-3">
-                                        <div class="form-check">
-                                            <mat-checkbox [formControlName]="field.key">
-                                                {{ field.label | translate }}
-                                            </mat-checkbox>
-                                        </div>
-                                        <mat-error *ngIf="
-                        dynamicForm.get(field.key)?.invalid &&
-                        (dynamicForm.get(field.key)?.dirty ||
-                          dynamicForm.get(field.key)?.touched)
-                      ">
-                                            <span *ngIf="dynamicForm.get(field.key)?.errors?.['required']">
-                                                {{ "VALIDATION.REQUIRED" | translate }}
-                                            </span>
-                                        </mat-error>
+                            <ng-container *ngFor="let field of getFieldsByType(section.fields, 'checkbox')">
+                                <div class="me-4 mb-3">
+                                    <div class="form-check">
+                                        <mat-checkbox [formControlName]="field.key">
+                                            {{ field.label | translate }}
+                                        </mat-checkbox>
                                     </div>
-                                </ng-container>
+                                </div>
                             </ng-container>
                         </div>
-
                         <div class="row">
                             <ng-container *ngFor="let field of section.fields">
-                                <ng-container *ngIf="field.type !== 'checkbox'">
+                                <ng-container *ngIf="field.type !== 'checkbox' && field.type !== 'text-editor'">
                                     <div class="col-12 col-md-4 mb-3" [ngSwitch]="field.type">
                                         <mat-form-field *ngSwitchCase="'text'" appearance="fill" class="w-100">
                                             <mat-label>{{ field.label | translate }}</mat-label>
@@ -122,6 +110,14 @@
                                 </ng-container>
                             </ng-container>
                         </div>
+                        <ng-container *ngFor="let field of getFieldsByType(section.fields, 'text-editor')">
+                            <div class="border">
+                                <ngx-editor-menu [editor]="editors[field.key]" [toolbar]="toolbar">
+                                </ngx-editor-menu>
+                                <ngx-editor [editor]="editors[field.key]" [formControlName]="field.key">
+                                </ngx-editor>
+                            </div>
+                        </ng-container>
                     </mat-expansion-panel>
                 </ng-container>
             </mat-accordion>
